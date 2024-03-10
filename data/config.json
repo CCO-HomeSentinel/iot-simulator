@@ -1,0 +1,57 @@
+{
+    "smoke": {
+        "type": "float",
+        "min": 0,
+        "max": 100,
+        "regular_min": 0,
+        "regular_max": 0.5,
+        "is_anomaly": true
+    },
+    "gas": {
+        "type": "float",
+        "min": 0,
+        "max": 100,
+        "regular_min": 0,
+        "regular_max": 0.5,
+        "is_anomaly": true
+    },
+    "inundation": {
+        "type": "boolean",
+        "min": false,
+        "max": true,
+        "regular": false,
+        "is_anomaly": true
+    },
+    "luminosity": {
+        "type": "float",
+        "min": 0,
+        "max": 100,
+        "regular_min": 0,
+        "regular_max": 80,
+        "is_anomaly": false
+    },
+    "sound": {
+        "type": "float",
+        "min": 0,
+        "max": 100,
+        "regular_min": 0,
+        "regular_max": 10,
+        "is_anomaly": false
+    },
+    "temperature": {
+        "type": "float",
+        "min": 0,
+        "max": 100,
+        "regular_min": 17,
+        "regular_max": 30,
+        "is_anomaly": false
+    },
+    "humidity": {
+        "type": "float",
+        "min": 0,
+        "max": 100,
+        "regular_min": 5,
+        "regular_max": 20,
+        "is_anomaly": false
+    }
+}
