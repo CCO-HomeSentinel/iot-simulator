@@ -2,7 +2,7 @@ import os
 from pymongo import MongoClient
 from dotenv import load_dotenv
 
-class Connection:
+class MongoConnection:
     def __init__(self):
         load_dotenv()
         self.connection = self.set_mongo_connection()

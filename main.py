@@ -1,11 +1,11 @@
-from src.connection.Connection import Connection
+from src.connection.MongoConnection import MongoConnection
 from src.service.simulator import simulate
 from src.utils.functions import load_init, load_simulator, clear
 
 def main():
     inserted_data = 0
     load_init()
-    conn = Connection()
+    conn = MongoConnection()
     load_simulator()
     
     while True:
