@@ -1,10 +1,21 @@
 import os
+import sys
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from domain.base import Base
 from dotenv import load_dotenv
-from domain.cliente import Cliente
-from domain.residencia import Residencia
+
+current_dir = os.path.dirname(os.path.abspath(__file__))
+src_dir = os.path.join(current_dir, '..', '..')
+sys.path.append(src_dir)
+
+from domain.Cliente import Cliente
+from domain.base import Base
+from domain.ComodoMonitorado import ComodoMonitorado
+from domain.ComodoMonitoradoSensor import ComodoMonitoradoSensor
+from domain.Endereco import Endereco
+from domain.Residencia import Residencia
+from domain.Sensor import Sensor
+from domain.Telefone import Telefone
 
 load_dotenv()
 
