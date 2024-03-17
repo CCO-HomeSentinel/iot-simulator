@@ -27,7 +27,7 @@ def gerar_dados_sensor(nome_sensor, ultimo_dado=None):
                 return random.uniform(min_val, regular_min)
             else:
                 if ultimo_dado:
-                    return ultimo_dado + random.uniform(-0.1, 0.1)
+                    return ultimo_dado + random.choice([-0.1, 0.1])
                 
                 return random.uniform(regular_min, regular_max)
         else:
