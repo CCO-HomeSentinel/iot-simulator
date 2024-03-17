@@ -1,57 +1,57 @@
 {
-    "smoke": {
-        "type": "float",
+    "fumaca": {
+        "tipo": "float",
         "min": 0,
         "max": 100,
         "regular_min": 0,
         "regular_max": 0.5,
-        "is_anomaly": true
+        "is_anomalia": true
     },
     "gas": {
-        "type": "float",
+        "tipo": "float",
         "min": 0,
         "max": 100,
         "regular_min": 0,
         "regular_max": 0.5,
-        "is_anomaly": true
+        "is_anomalia": true
     },
-    "inundation": {
-        "type": "boolean",
+    "inundacao": {
+        "tipo": "boolean",
         "min": false,
         "max": true,
         "regular": false,
-        "is_anomaly": true
+        "is_anomalia": true
     },
-    "luminosity": {
-        "type": "float",
+    "luminosidade": {
+        "tipo": "float",
         "min": 0,
         "max": 100,
         "regular_min": 0,
         "regular_max": 80,
-        "is_anomaly": false
+        "is_anomalia": false
     },
-    "sound": {
-        "type": "float",
+    "som": {
+        "tipo": "float",
         "min": 0,
         "max": 100,
         "regular_min": 0,
         "regular_max": 10,
-        "is_anomaly": false
+        "is_anomalia": false
     },
-    "temperature": {
-        "type": "float",
+    "temperatura": {
+        "tipo": "float",
         "min": 0,
         "max": 100,
         "regular_min": 17,
         "regular_max": 30,
-        "is_anomaly": false
+        "is_anomalia": false
     },
-    "humidity": {
-        "type": "float",
+    "umidade": {
+        "tipo": "float",
         "min": 0,
         "max": 100,
         "regular_min": 5,
         "regular_max": 20,
-        "is_anomaly": false
+        "is_anomalia": false
     }
 }
