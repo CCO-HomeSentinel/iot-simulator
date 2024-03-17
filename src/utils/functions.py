@@ -1,5 +1,6 @@
 import os
 import time
+from dotenv import load_dotenv
 
 thumb = [
 '',
@@ -55,3 +56,12 @@ def load_menu():
         return 3
     else:
         return 0
+
+def load_sensores_disponiveis():
+    sensores = ['fumaca', 'gas', 'inundacao', 'luminosidade', 'som', 'temperatura', 'umidade']
+    
+    for sensor in sensores:
+        if not os.getenv(f'SENSOR_{sensor.upper()}') in ('True', 'true', '1'):
+            sensores.remove(sensor)
+
+    return sensores

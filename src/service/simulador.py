@@ -2,6 +2,9 @@ import json
 import random
 from datetime import datetime
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
 
@@ -36,21 +39,22 @@ def gerar_dados_sensor(nome_sensor):
         else:
             return random.choice([True, False])
 
-def criar_dados_simulados():
+def criar_dados_simulados(sensores):
     ocorrencia = {
         'timestamp': datetime.now().isoformat(),
         'sensors': {}
     }
 
     for nome_sensor in config:
-        sensor_data = gerar_dados_sensor(nome_sensor)
-        ocorrencia['sensors'][nome_sensor] = sensor_data
+        if nome_sensor in sensores:
+            sensor_data = gerar_dados_sensor(nome_sensor)
+            ocorrencia['sensors'][nome_sensor] = sensor_data
 
     return ocorrencia
 
-def simulate(conn):
+def simular(conn, sensores):
     try:
-        data = criar_dados_simulados()
+        data = criar_dados_simulados(sensores)
         conn.insert_data([data])
         return 1
     except Exception as e:
