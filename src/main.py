@@ -26,10 +26,13 @@ def main():
                 if not sensores:
                     break
 
-                ultimos_dados = simular(connMongo, sensores, ultimos_dados)
-                ocorrencias_inseridas+=1
+                novos_dados = simular(connMongo, sensores, ultimos_dados)
+                if ultimos_dados:
+                    ocorrencias_inseridas+=1
+                    ultimos_dados = novos_dados
+
                 print(f"{ocorrencias_inseridas} dados inseridos\n")
-                sleep(2)
+                sleep(0.25)
                 clear()
 
         if resp == 2:

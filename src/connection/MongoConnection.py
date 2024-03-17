@@ -19,7 +19,10 @@ class MongoConnection:
 
     def insert_data(self, data):
         collection = self.connection.get_collection('sensor_data')
-        id_inserido = collection.insert_one(data)
+        try:
+            id_inserido = collection.insert_one(data)
+        except Exception as e:
+            return None
         
         dados_inseridos = self.get_data({'_id': id_inserido.inserted_id})
         return dados_inseridos
