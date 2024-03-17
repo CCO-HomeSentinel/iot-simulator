@@ -1,14 +1,14 @@
 from connection.MongoConnection import MongoConnection
 from connection.PostgresConnection import PostgresConnection
-from service.simulator import simulate
-from utils.functions import load_init, load_simulator, clear, load_menu
+from service.simulador import simular
+from utils.functions import load_init, load_simulator, clear, load_menu, load_sensores_disponiveis
 import os
 from dotenv import load_dotenv
 
 load_dotenv()
 
 def main():
-    inserted_data = 0
+    ocorrencias_inseridas = 0
     load_init(skip=os.getenv('SKIP_INTRO') in ('True', 'true', '1'))
     connMongo = MongoConnection()
     connPostgres = PostgresConnection()
@@ -19,8 +19,9 @@ def main():
 
         if resp == 1:
             while True:
-                inserted_data += simulate(connMongo)
-                print(f"{inserted_data} dados inseridos\n")
+                sensores = load_sensores_disponiveis()
+                ocorrencias_inseridas += simular(connMongo, sensores)
+                print(f"{ocorrencias_inseridas} dados inseridos\n")
                 clear()
 
         if resp == 2:
