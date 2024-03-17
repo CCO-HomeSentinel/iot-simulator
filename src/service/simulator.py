@@ -8,16 +8,16 @@ dir_path = os.path.dirname(os.path.realpath(__file__))
 with open('data/config.json') as config_file:
     config = json.load(config_file)
 
-def generate_sensor_data(sensor_name):
-    sensor_config = config[sensor_name]
-    sensor_type = sensor_config['type']
-    is_anomaly = sensor_config['is_anomaly']
+def gerar_dados_sensor(nome_sensor):
+    sensor_config = config[nome_sensor]
+    tipo_sensor = sensor_config['tipo']
+    is_anomalia = sensor_config['is_anomalia']
 
-    if sensor_type == 'float':
+    if tipo_sensor == 'float':
         min_val = sensor_config['min']
         max_val = sensor_config['max']
 
-        if is_anomaly:
+        if is_anomalia:
             regular_min = sensor_config['regular_min']
             regular_max = sensor_config['regular_max']
             if random.random() < 0.01:  # 1% de chance de ser uma anomalia
@@ -27,8 +27,8 @@ def generate_sensor_data(sensor_name):
         else:
             return random.uniform(min_val, max_val)
 
-    elif sensor_type == 'boolean':
-        if is_anomaly:
+    elif tipo_sensor == 'boolean':
+        if is_anomalia:
             if random.random() < 0.01:  # 1% de chance de ser uma anomalia
                 return not sensor_config['regular']
             else:
@@ -36,21 +36,21 @@ def generate_sensor_data(sensor_name):
         else:
             return random.choice([True, False])
 
-def create_simulated_data():
-    data = {
+def criar_dados_simulados():
+    ocorrencia = {
         'timestamp': datetime.now().isoformat(),
         'sensors': {}
     }
 
-    for sensor_name in config:
-        sensor_data = generate_sensor_data(sensor_name)
-        data['sensors'][sensor_name] = sensor_data
+    for nome_sensor in config:
+        sensor_data = gerar_dados_sensor(nome_sensor)
+        ocorrencia['sensors'][nome_sensor] = sensor_data
 
-    return data
+    return ocorrencia
 
 def simulate(conn):
     try:
-        data = create_simulated_data()
+        data = criar_dados_simulados()
         conn.insert_data([data])
         return 1
     except Exception as e:
