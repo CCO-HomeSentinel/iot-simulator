@@ -12,14 +12,22 @@ thumb = [
 '',                                                                                                              
 '']
 
+bolder = '\033[1m'
+not_bolder = '\033[0m'
+
 def clear():
     if os.name == 'nt':
         os.system('cls')
     else:
         os.system('clear')
 
-def load_init():
+def load_init(skip=False):
     clear()
+
+    if skip == True:
+
+        return
+    
     for line in thumb:
         time.sleep(0.3)
         print(line)
@@ -30,3 +38,20 @@ def load_simulator():
     clear()
     print('Iniciando simulação...')
     time.sleep(1)
+
+def load_menu():
+    clear()
+    print(f"{bolder}HOME SENTINEL{not_bolder}\n")
+    print(f"{bolder}1{not_bolder} - Iniciar Simulação")
+    print(f"{bolder}2{not_bolder} - Analisar Dados Gerados")
+    print(f"{bolder}3{not_bolder} - Sair\n")
+    resposta = input(f"{bolder}> {not_bolder}")
+
+    if resposta == '1':
+        return 1
+    elif resposta == '2':
+        return 2
+    elif resposta == '3':
+        return 3
+    else:
+        return 0
