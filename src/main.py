@@ -3,12 +3,14 @@ from connection.PostgresConnection import PostgresConnection
 from service.simulador import simular
 from utils.functions import load_init, load_simulator, clear, load_menu, load_sensores_disponiveis
 import os
+from time import sleep
 from dotenv import load_dotenv
 
 load_dotenv()
 
 def main():
     ocorrencias_inseridas = 0
+    ultimos_dados = None
     load_init(skip=os.getenv('SKIP_INTRO') in ('True', 'true', '1'))
     connMongo = MongoConnection()
     connPostgres = PostgresConnection()
@@ -20,8 +22,17 @@ def main():
         if resp == 1:
             while True:
                 sensores = load_sensores_disponiveis()
-                ocorrencias_inseridas += simular(connMongo, sensores)
+
+                if not sensores:
+                    break
+
+                novos_dados = simular(connMongo, sensores, ultimos_dados)
+                if novos_dados:
+                    ocorrencias_inseridas+=1
+                    ultimos_dados = novos_dados
+
                 print(f"{ocorrencias_inseridas} dados inseridos\n")
+                sleep(0.25)
                 clear()
 
         if resp == 2:
