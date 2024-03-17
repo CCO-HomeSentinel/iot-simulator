@@ -53,7 +53,7 @@ def load_menu():
     elif resposta == '2':
         return 2
     elif resposta == '3':
-        return 3
+        load_exit()
     else:
         return 0
 
@@ -65,3 +65,12 @@ def load_sensores_disponiveis():
             sensores.remove(sensor)
 
     return sensores
+
+def load_exit():
+    clear()
+    load_init()
+    print('Até mais...')
+    time.sleep(1)
+    clear()
+    exit()
+    

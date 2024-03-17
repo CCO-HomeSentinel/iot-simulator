@@ -27,6 +27,12 @@ def __init__(self, nome, fabricante, funcionalidade, tipo, unidade_medida, min_v
     self.regular_max = regular_max_val
     self.is_anomalia = is_anomalia
 
+def set_range_limite(self, valor):
+    if valor < eval(self.tipo(self.min)):
+        return self.min
+    elif valor > eval(self.tipo(self.max)):
+        return self.max
+
 def get_id(self):
     return self.id
 
