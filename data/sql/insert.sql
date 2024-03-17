@@ -26,18 +26,26 @@ VALUES
   (55, 11, '912345678', 'Celular', 1),
   (55, 21, '998765432', 'Celular', 2);
 
-INSERT INTO home_sentinel.sensor (nome, fabricante, funcionalidade)
+INSERT INTO home_sentinel.sensor (nome, fabricante, funcionalidade, tipo, unidade_medida, min, max, regular_min, regular_max, is_anomalia)
 VALUES
-  ('Sensor de Movimento', 'ABC Electronics', 'Detecta movimentos no ambiente'),
-  ('Sensor de Temperatura', 'XYZ Corp', 'Mede a temperatura do ambiente'),
-  ('Sensor de Fumaça', '123 Sensors', 'Detecta a presença de fumaça no ambiente');
-
+  ('Sensor de Fumaça', 'TechFire', 'Detecta a presença de fumaça no ar', 'float', 'ppm', '0', '100', '0', '0.5', true),
+  ('Sensor de Gás', 'SafeGas', 'Detecta a presença de gases tóxicos', 'float', 'ppm', '0', '100', '0', '0.5', true),
+  ('Sensor de Inundação', 'AquaSafe', 'Detecta se há água no ambiente', 'boolean', 'bool', 'false', 'true', 'false', 'false', true),
+  ('Sensor de Luminosidade', 'BrightTech', 'Mede a intensidade da luz', 'float', 'lux', '0', '100', '0', '80', false),
+  ('Sensor de Som', 'AudioSense', 'Registra os níveis de som no ambiente', 'float', 'db', '0', '100', '0', '10', false),
+  ('Sensor de Temperatura', 'ThermoTech', 'Mede a temperatura ambiente', 'float', '°C', '0', '100', '17', '30', false),
+  ('Sensor de Umidade', 'Humidex', 'Monitora os níveis de umidade no ar', 'float', '%', '0', '100', '5', '20', false);
+  
+  
 INSERT INTO home_sentinel.comodo_monitorado_sensor (comodo_monitorado_id, sensor_id)
 VALUES
   (1, 1),
   (1, 2),
   (2, 1),
-  (3, 2),
-  (3, 3),
-  (4, 2),
-  (5, 3);
+  (2, 7),
+  (3, 1),
+  (3, 4),
+  (4, 3),
+  (4, 5),
+  (5, 1),
+  (5, 6);

@@ -95,7 +95,15 @@ CREATE TABLE IF NOT EXISTS home_sentinel.sensor (
   id SERIAL PRIMARY KEY,
   nome VARCHAR(64),
   fabricante VARCHAR(64),
-  funcionalidade VARCHAR(64)
+  funcionalidade VARCHAR(64),
+  tipo VARCHAR(64),
+  unidade_medida VARCHAR(16),
+  min VARCHAR(8),
+  max VARCHAR(8),
+  regular_min VARCHAR(8),
+  regular_max VARCHAR(8),
+  is_anomalia BOOLEAN,
+  CONSTRAINT tipo_check CHECK (tipo IN ('float', 'boolean'))
 );
 
 
