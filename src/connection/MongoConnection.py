@@ -19,4 +19,11 @@ class MongoConnection:
 
     def insert_data(self, data):
         collection = self.connection.get_collection('sensor_data')
-        collection.insert_many(data)
+        id_inserido = collection.insert_one(data)
+        
+        dados_inseridos = self.get_data({'_id': id_inserido.inserted_id})
+        return dados_inseridos
+        
+    def get_data(self, query):
+        collection = self.connection.get_collection('sensor_data')
+        return collection.find(query)
