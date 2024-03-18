@@ -17,6 +17,10 @@ def main():
     
     while True:
         clear()
+
+        clientes = connPostgres.get_clientes()
+        # sensores = connMongo.get_sensores()
+
         resp = load_menu()
 
         if resp == 1:

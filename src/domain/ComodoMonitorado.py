@@ -10,3 +10,5 @@ class ComodoMonitorado(Base):
     altura = Column(Integer)
     residencia_id = Column(Integer, ForeignKey('residencia.id'))
     residencia = relationship("Residencia", back_populates="comodos_monitorados")
+
+    __table_args__ = {'extend_existing': True} 

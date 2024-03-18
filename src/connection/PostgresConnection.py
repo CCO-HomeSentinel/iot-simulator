@@ -4,9 +4,8 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from dotenv import load_dotenv
 
-current_dir = os.path.dirname(os.path.abspath(__file__))
-src_dir = os.path.join(current_dir, '..', '..')
-sys.path.append(src_dir)
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
 
 from domain.Cliente import Cliente
 from domain.base import Base
@@ -36,6 +35,13 @@ class PostgresConnection:
 
     def close_connection(self):
         self.session.close()
+
+    def return_dict(self, obj):
+        return {col.name: getattr(obj, col.name) for col in obj.__table__.columns}
+
+    def get_clientes(self):
+        dados = self.session.query(Cliente).all()
+        return [self.return_dict(dado) for dado in dados]
 
 if __name__ == "__main__":
     postgres_conn = PostgresConnection()

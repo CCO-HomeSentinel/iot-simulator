@@ -15,6 +15,8 @@ class Sensor(Base):
     regular_max = Column(String)
     is_anomalia = Column(String)
 
+    __table_args__ = {'extend_existing': True}
+
 def __init__(self, nome, fabricante, funcionalidade, tipo, unidade_medida, min_val, max_val, regular_min_val, regular_max_val, is_anomalia):
     self.nome = nome
     self.fabricante = fabricante

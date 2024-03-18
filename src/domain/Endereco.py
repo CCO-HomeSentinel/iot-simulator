@@ -15,3 +15,5 @@ class Endereco(Base):
     habilitado = Column(Boolean)
     residencia_id = Column(Integer, ForeignKey('residencia.id'))
     residencia = relationship("Residencia", back_populates="enderecos")
+
+    __table_args__ = {'extend_existing': True} 

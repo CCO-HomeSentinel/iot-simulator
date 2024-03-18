@@ -6,3 +6,5 @@ class ComodoMonitoradoSensor(Base):
     id = Column(Integer, primary_key=True)
     comodo_monitorado_id = Column(Integer, ForeignKey('comodo_monitorado.id'))
     sensor_id = Column(Integer, ForeignKey('sensor.id'))
+
+    __table_args__ = {'extend_existing': True} 
