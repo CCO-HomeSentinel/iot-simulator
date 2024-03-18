@@ -5,6 +5,7 @@ class Sensor(Base):
     __tablename__ = 'sensor'
     id = Column(Integer, primary_key=True)
     nome = Column(String)
+    nome_bruto = Column(String)
     fabricante = Column(String)
     funcionalidade = Column(String)
     tipo = Column(String)
@@ -17,8 +18,9 @@ class Sensor(Base):
 
     __table_args__ = {'extend_existing': True}
 
-def __init__(self, nome, fabricante, funcionalidade, tipo, unidade_medida, min_val, max_val, regular_min_val, regular_max_val, is_anomalia):
+def __init__(self, nome, nome_bruto, fabricante, funcionalidade, tipo, unidade_medida, min_val, max_val, regular_min_val, regular_max_val, is_anomalia):
     self.nome = nome
+    self.nome_bruto = nome_bruto
     self.fabricante = fabricante
     self.funcionalidade = funcionalidade
     self.tipo = tipo
@@ -46,6 +48,12 @@ def get_nome(self):
 
 def set_nome(self, nome):
     self.nome = nome
+
+def get_nome_bruto(self):
+    return self.nome_bruto
+
+def set_nome_bruto(self, nome_bruto):
+    self.nome_bruto = nome_bruto
 
 def set_fabricante(self, fabricante):
     self.fabricante = fabricante

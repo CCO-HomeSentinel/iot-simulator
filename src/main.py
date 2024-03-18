@@ -1,6 +1,6 @@
 from connection.MongoConnection import MongoConnection
 from connection.PostgresConnection import PostgresConnection
-from service.simulador import simular
+from service.simulador import simular, refinar_sensores
 from utils.functions import load_init, load_simulator, clear, load_menu, load_sensores_disponiveis
 import os
 from time import sleep
@@ -19,7 +19,8 @@ def main():
         clear()
 
         clientes = connPostgres.get_clientes() # será utilizado para criar o relatório
-        sensores = connPostgres.get_sensores_para_simular()
+        sensores_refinados = refinar_sensores(connPostgres.get_sensores_para_simular())
+        exit()
 
         resp = load_menu()
 

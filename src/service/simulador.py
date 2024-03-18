@@ -75,3 +75,13 @@ def simular(conn, sensores, ultimas_ocorrencias):
     except Exception as e:
         print(f'Erro ao inserir dados: {e}')
         exit()
+
+def refinar_sensores(sensores):
+    for nome_sensor in config:
+        for sensor in sensores:
+            print(nome_sensor)
+            print(sensor)
+            print("\n\n\n")
+
+    exit()
+        

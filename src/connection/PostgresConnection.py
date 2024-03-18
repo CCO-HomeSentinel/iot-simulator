@@ -65,6 +65,7 @@ class PostgresConnection:
                     sensor_a_adicionar['id_comodo'] = sensor_comodo['comodo_monitorado_id']
                     sensor_a_adicionar['id_sensor'] = sensor['id']
                     sensor_a_adicionar['nome'] = sensor['nome']
+                    sensor_a_adicionar['nome_bruto'] = sensor['nome_bruto']
                     sensor_a_adicionar['fabricante'] = sensor['fabricante']
                     sensor_a_adicionar['funcionalidade'] = sensor['funcionalidade']
                     sensor_a_adicionar['tipo'] = sensor['tipo']

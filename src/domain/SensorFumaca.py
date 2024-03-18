@@ -3,7 +3,8 @@ import random
 
 class SensorFumaca(Sensor):
     def __init__(self):
-        nome = "Sensor de Fumaça"
+        nome = "Sensor de Fumaça",
+        nome_bruto = "fumaca"
         fabricante = "TechFire"
         funcionalidade = "Detecta a presença de fumaça no ar"
         tipo = "float"
@@ -14,7 +15,7 @@ class SensorFumaca(Sensor):
         regular_max_val = "0.5"
         is_anomalia = True
 
-        super().__init__(nome, fabricante, funcionalidade, tipo, unidade_medida, min_val, max_val, regular_min_val, regular_max_val, is_anomalia)
+        super().__init__(nome, nome_bruto, fabricante, funcionalidade, tipo, unidade_medida, min_val, max_val, regular_min_val, regular_max_val, is_anomalia)
 
     def sortear_anomalia(self):
         return random.random() < 0.001
