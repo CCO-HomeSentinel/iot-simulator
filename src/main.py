@@ -1,7 +1,7 @@
 from connection.MongoConnection import MongoConnection
 from connection.PostgresConnection import PostgresConnection
 from service.simulador import simular, refinar_sensores
-from utils.functions import load_init, load_simulator, clear, load_menu, load_sensores_disponiveis
+from utils.functions import load_init, load_simulator, clear, load_menu, load_sensores_disponiveis, load_exit, load_not_found
 import os
 from time import sleep
 from dotenv import load_dotenv
@@ -18,7 +18,6 @@ def main():
     clientes = connPostgres.get_clientes() # será utilizado para criar o relatório
     sensores_disponiveis = load_sensores_disponiveis()
     sensores = refinar_sensores(connPostgres.get_sensores_para_simular(), sensores_disponiveis)
-    exit()
     
     while True:
         clear()
@@ -29,6 +28,7 @@ def main():
             while True:
 
                 if not sensores:
+                    load_not_found()
                     break
 
                 novos_dados = simular(connMongo, sensores, ultimos_dados)
@@ -50,6 +50,7 @@ def main():
             break
 
         clear()
+        load_exit()
 
 if __name__ == '__main__':
     main()

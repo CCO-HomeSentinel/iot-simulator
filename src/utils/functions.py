@@ -74,3 +74,8 @@ def load_exit():
     clear()
     exit()
     
+def load_not_found():
+    clear()
+    print('Nenhum sensor disponível para simulação.')
+    time.sleep(2)
+    clear()

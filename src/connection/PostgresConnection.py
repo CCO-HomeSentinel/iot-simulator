@@ -6,7 +6,6 @@ from dotenv import load_dotenv
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-
 from domain.Cliente import Cliente
 from domain.base import Base
 from domain.ComodoMonitorado import ComodoMonitorado
