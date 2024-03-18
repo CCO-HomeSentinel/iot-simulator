@@ -18,8 +18,8 @@ def main():
     while True:
         clear()
 
-        clientes = connPostgres.get_clientes()
-        # sensores = connMongo.get_sensores()
+        clientes = connPostgres.get_clientes() # será utilizado para criar o relatório
+        sensores = connPostgres.get_sensores_para_simular()
 
         resp = load_menu()
 
