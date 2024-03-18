@@ -14,19 +14,19 @@ def main():
     load_init(skip=os.getenv('SKIP_INTRO') in ('True', 'true', '1'))
     connMongo = MongoConnection()
     connPostgres = PostgresConnection()
+
+    clientes = connPostgres.get_clientes() # será utilizado para criar o relatório
+    sensores_disponiveis = load_sensores_disponiveis()
+    sensores = refinar_sensores(connPostgres.get_sensores_para_simular(), sensores_disponiveis)
+    exit()
     
     while True:
         clear()
-
-        clientes = connPostgres.get_clientes() # será utilizado para criar o relatório
-        sensores_refinados = refinar_sensores(connPostgres.get_sensores_para_simular())
-        exit()
 
         resp = load_menu()
 
         if resp == 1:
             while True:
-                sensores = load_sensores_disponiveis()
 
                 if not sensores:
                     break

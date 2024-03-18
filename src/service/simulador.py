@@ -76,12 +76,12 @@ def simular(conn, sensores, ultimas_ocorrencias):
         print(f'Erro ao inserir dados: {e}')
         exit()
 
-def refinar_sensores(sensores):
-    for nome_sensor in config:
-        for sensor in sensores:
-            print(nome_sensor)
-            print(sensor)
-            print("\n\n\n")
+def refinar_sensores(sensores, sensores_disponiveis):
+    sensores_finais = []
 
-    exit()
-        
+    for nome_sensor in sensores_disponiveis:
+        for sensor in sensores:
+            if (nome_sensor == sensor['nome_bruto']):
+                sensores_finais.append(sensor)
+
+    return sensores_finais
