@@ -11,4 +11,4 @@ class SensorInundacao(Sensor):
     @staticmethod
     def simular_dado(self, valor_anterior=None):
         # a desenvolver
-        return None
+        return False

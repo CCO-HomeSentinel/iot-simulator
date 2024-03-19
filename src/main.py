@@ -1,6 +1,6 @@
 from connection.MongoConnection import MongoConnection
 from connection.PostgresConnection import PostgresConnection
-from service.simulador import simular, refinar_sensores
+from service.simulador import simular, refinar_sensores, ativar_sensores
 from utils.functions import load_init, load_simulator, clear, load_menu, load_sensores_disponiveis, load_exit, load_not_found
 import os
 from time import sleep
@@ -19,10 +19,7 @@ def main():
     sensores_disponiveis = load_sensores_disponiveis()
     sensores = refinar_sensores(connPostgres.get_sensores_para_simular(), sensores_disponiveis)
     instancias = connPostgres.load_sensores(sensores_disponiveis)
-
-    for inst in instancias:
-        print(inst.to_string())
-    exit()
+    ativar_sensores(instancias)
     
     while True:
         clear()
