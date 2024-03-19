@@ -18,6 +18,10 @@ def main():
     clientes = connPostgres.get_clientes() # será utilizado para criar o relatório
     sensores_disponiveis = load_sensores_disponiveis()
     sensores = refinar_sensores(connPostgres.get_sensores_para_simular(), sensores_disponiveis)
+    instancias = connPostgres.load_sensores(sensores_disponiveis)
+
+    print(instancias)
+    exit()
     
     while True:
         clear()

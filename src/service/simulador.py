@@ -11,7 +11,7 @@ from domain.SensorFumaca import SensorFumaca
 load_dotenv()
 
 sensor_funcao = {
-    
+    'fumaca': SensorFumaca.simular_dado
 }
 
 # def gerar_dados_sensor(nome_sensor, ultimo_dado=None):
@@ -53,7 +53,6 @@ def criar_dados_simulados(sensores, ultima_ocorrencia=None):
 
     for sensor in sensores:
         sensor_data = sensor_funcao[sensor['nome_bruto']](ultima_ocorrencia)
-        print(sensor_data)
 
         exit()
 
@@ -89,5 +88,5 @@ def refinar_sensores(sensores, sensores_disponiveis):
         for sensor in sensores:
             if (nome_sensor == sensor['nome_bruto']):
                 sensores_finais.append(sensor)
-
+                
     return sensores_finais

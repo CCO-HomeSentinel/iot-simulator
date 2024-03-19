@@ -15,7 +15,13 @@ from domain.Residencia import Residencia
 from domain.Sensor import Sensor
 from domain.Telefone import Telefone
 
+from domain.SensorFumaca import SensorFumaca
+
 load_dotenv()
+
+sensor_dict = {
+    'fumaca': SensorFumaca
+}
 
 class PostgresConnection:
     def __init__(self):
@@ -50,12 +56,22 @@ class PostgresConnection:
         dados = self.session.query(ComodoMonitoradoSensor).all()
         return [self.return_dict(dado) for dado in dados]
     
+    def load_sensores(self, sensores_disponivies):
+        objetos_instanciados = []
+        sensores_banco = self.get_sensores()
+
+        for sensor in sensores_banco:
+            if sensor['nome_bruto'] in sensores_disponivies:
+                    # def __init__(self, nome, nome_bruto, fabricante, funcionalidade, tipo, unidade_medida, min_val, max_val, regular_min_val, regular_max_val, is_anomalia):
+
+                objetos_instanciados.append(sensor_dict[sensor['nome_bruto']](sensor['nome'], sensor['nome_bruto'], sensor['fabricante'], sensor['funcionalidade'], sensor['tipo'], sensor['unidade_medida'], sensor['min'], sensor['max'], sensor['regular_min'], sensor['regular_max'], sensor['is_anomalia']))
+
+        return objetos_instanciados
+    
     def get_sensores_para_simular(self):
         sensores_a_monitorar = []
         sensores = self.get_sensores()
         sensores_comodos_monitorados = self.get_sensores_comodos_monitorados()
-        print(sensores)
-        print(sensores_comodos_monitorados)
 
         for sensor_comodo in sensores_comodos_monitorados:
             sensor_a_adicionar = {}
@@ -87,6 +103,3 @@ if __name__ == "__main__":
     
     session = postgres_conn.get_session()
     postgres_conn.close_connection()
-
-
-    

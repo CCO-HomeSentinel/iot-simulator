@@ -16,6 +16,8 @@ thumb = [
 bolder = '\033[1m'
 not_bolder = '\033[0m'
 
+
+
 def clear():
     if os.name == 'nt':
         os.system('cls')
