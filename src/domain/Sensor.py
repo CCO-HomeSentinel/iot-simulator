@@ -108,3 +108,6 @@ class Sensor(Base):
 
     def get_is_anomalia(self):
         return self.is_anomalia
+    
+    def to_string(self):
+        return f'Nome: {self.nome}, Nome Bruto: {self.nome_bruto}, Fabricante: {self.fabricante}, Funcionalidade: {self.funcionalidade}, Tipo: {self.tipo}, Unidade de Medida: {self.unidade_medida}, Min: {self.min}, Max: {self.max}, Regular Min: {self.regular_min}, Regular Max: {self.regular_max}, Is Anomalia: {self.is_anomalia}'

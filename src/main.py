@@ -20,7 +20,8 @@ def main():
     sensores = refinar_sensores(connPostgres.get_sensores_para_simular(), sensores_disponiveis)
     instancias = connPostgres.load_sensores(sensores_disponiveis)
 
-    print(instancias)
+    for inst in instancias:
+        print(inst.to_string())
     exit()
     
     while True:

@@ -16,11 +16,23 @@ from domain.Sensor import Sensor
 from domain.Telefone import Telefone
 
 from domain.SensorFumaca import SensorFumaca
+from domain.SensorGas import SensorGas
+from domain.SensorInundacao import SensorInundacao
+from domain.SensorLuminosidade import SensorLuminosidade
+from domain.SensorSom import SensorSom
+from domain.SensorTemperatura import SensorTemperatura
+from domain.SensorUmidade import SensorUmidade
 
 load_dotenv()
 
 sensor_dict = {
-    'fumaca': SensorFumaca
+    'fumaca': SensorFumaca,
+    'gas': SensorGas,
+    'inundacao': SensorInundacao,
+    'luminosidade': SensorLuminosidade,
+    'som': SensorSom,
+    'temperatura': SensorTemperatura,
+    'umidade': SensorUmidade
 }
 
 class PostgresConnection:
@@ -62,8 +74,6 @@ class PostgresConnection:
 
         for sensor in sensores_banco:
             if sensor['nome_bruto'] in sensores_disponivies:
-                    # def __init__(self, nome, nome_bruto, fabricante, funcionalidade, tipo, unidade_medida, min_val, max_val, regular_min_val, regular_max_val, is_anomalia):
-
                 objetos_instanciados.append(sensor_dict[sensor['nome_bruto']](sensor['nome'], sensor['nome_bruto'], sensor['fabricante'], sensor['funcionalidade'], sensor['tipo'], sensor['unidade_medida'], sensor['min'], sensor['max'], sensor['regular_min'], sensor['regular_max'], sensor['is_anomalia']))
 
         return objetos_instanciados
