@@ -54,6 +54,8 @@ class PostgresConnection:
         sensores_a_monitorar = []
         sensores = self.get_sensores()
         sensores_comodos_monitorados = self.get_sensores_comodos_monitorados()
+        print(sensores)
+        print(sensores_comodos_monitorados)
 
         for sensor_comodo in sensores_comodos_monitorados:
             sensor_a_adicionar = {}
@@ -85,3 +87,6 @@ if __name__ == "__main__":
     
     session = postgres_conn.get_session()
     postgres_conn.close_connection()
+
+
+    
