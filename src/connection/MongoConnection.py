@@ -22,6 +22,7 @@ class MongoConnection:
         try:
             id_inserido = collection.insert_one(data)
         except Exception as e:
+            print(e)
             return None
         
         dados_inseridos = self.get_data({'_id': id_inserido.inserted_id})

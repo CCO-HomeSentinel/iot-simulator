@@ -8,7 +8,6 @@ class SensorFumaca(Sensor):
     def sortear_anomalia(self):
         return random.random() < 0.001
 
-    @staticmethod
     def simular_dado(self, valor_anterior=None):
         if self.is_anomalia:
             if self.sortear_anomalia():
@@ -17,4 +16,4 @@ class SensorFumaca(Sensor):
         if valor_anterior:
             return self.set_range_limite(valor_anterior + random.choice([-0.1, 0.1]))
         else:
-            return self.set_range_limite(random.uniform(eval(self.tipo(self.min), eval(self.tipo(self.max)))))
+            return self.set_range_limite(random.uniform(float(self.min), float(self.max)))

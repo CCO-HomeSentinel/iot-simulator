@@ -32,10 +32,12 @@ class Sensor(Base):
         self.is_anomalia = is_anomalia
 
     def set_range_limite(self, valor):
-        if valor < eval(self.tipo(self.min)):
-            return self.min
-        elif valor > eval(self.tipo(self.max)):
-            return self.max
+        if valor < eval(self.tipo)(self.min):
+            return eval(self.tipo)(self.min)
+        elif valor > eval(self.tipo)(self.max):
+            return eval(self.tipo)(self.max)
+        else:
+            return eval(self.tipo)(valor)
 
     def get_id(self):
         return self.id

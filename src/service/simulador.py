@@ -15,6 +15,8 @@ sensor_funcao = {}
 def ativar_sensores(instancias):
     for instancia in instancias:
         sensor_funcao[instancia.nome_bruto] = instancia
+
+    return sensor_funcao
     
 def criar_dados_simulados(sensores, ultima_ocorrencia=None):
     ocorrencia = {
@@ -23,7 +25,6 @@ def criar_dados_simulados(sensores, ultima_ocorrencia=None):
     }
 
     for sensor in sensores:
-        print(sensor_funcao[sensor['nome_bruto'].to_string()])
         sensor_data = sensor_funcao[sensor['nome_bruto']].simular_dado(ultima_ocorrencia)
         ocorrencia['sensors'][sensor['nome_bruto']] = sensor_data
 
@@ -34,6 +35,8 @@ def simular(conn, sensores, ultima_ocorrencia=None):
         data = criar_dados_simulados(sensores, ultima_ocorrencia)
 
         dados_inseridos = conn.insert_data(data)
+        print(dados_inseridos)
+        exit()
         return dados_inseridos
     except Exception as e:
         print(f'Erro ao inserir dados: {e}')
