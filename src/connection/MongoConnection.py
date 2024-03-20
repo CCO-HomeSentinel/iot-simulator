@@ -8,7 +8,7 @@ class MongoConnection:
         self.connection = self.set_mongo_connection()
 
     def set_mongo_connection(self):
-        mongo_uri = f"mongodb://{os.getenv('MONGODB_USERNAME')}:{os.getenv('MONGODB_PASSWORD')}@{os.getenv('MONGODB_HOST')}:{os.getenv('MONGODB_PORT')}/{os.getenv('MONGODB_DATABASE')}"
+        mongo_uri = f"mongodb://{os.getenv('MONGODB_USERNAME')}:{os.getenv('MONGODB_PASSWORD')}@{os.getenv('MONGODB_HOST')}:{os.getenv('MONGODB_PORT')}/{os.getenv('MONGODB_DATABASE')}?authSource={os.getenv('MONGODB_AUTH_SOURCE')}"
         client = MongoClient(mongo_uri)
         db = client.get_default_database()
 

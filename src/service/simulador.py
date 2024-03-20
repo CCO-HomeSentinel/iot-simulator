@@ -35,8 +35,6 @@ def simular(conn, sensores, ultima_ocorrencia=None):
         data = criar_dados_simulados(sensores, ultima_ocorrencia)
 
         dados_inseridos = conn.insert_data(data)
-        print(dados_inseridos)
-        exit()
         return dados_inseridos
     except Exception as e:
         print(f'Erro ao inserir dados: {e}')
