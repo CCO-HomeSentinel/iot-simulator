@@ -8,7 +8,6 @@ class SensorTemperatura(Sensor):
     def sortear_anomalia(self):
         return random.random() < 0.001
 
-    @staticmethod
     def simular_dado(self, valor_anterior=None):
         # a desenvolver
         return 2

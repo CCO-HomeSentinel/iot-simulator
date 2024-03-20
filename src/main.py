@@ -34,6 +34,7 @@ def main():
                     break
 
                 novos_dados = simular(connMongo, sensores, ultimos_dados)
+
                 if novos_dados:
                     ocorrencias_inseridas+=1
                     ultimos_dados = novos_dados
