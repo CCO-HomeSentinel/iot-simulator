@@ -9,13 +9,14 @@ from dotenv import load_dotenv
 load_dotenv()
 
 def main():
+    intervalo = float(os.getenv('INTERVALO_SIMULADOR'))
     ocorrencias_inseridas = 0
     ultimos_dados = None
     load_init(skip=os.getenv('SKIP_INTRO') in ('True', 'true', '1'))
     connMongo = MongoConnection()
     connPostgres = PostgresConnection()
 
-    clientes = connPostgres.get_clientes() # será utilizado para criar o relatório
+    clientes = connPostgres.get_clientes()
     sensores_disponiveis = load_sensores_disponiveis()
     sensores = refinar_sensores(connPostgres.get_sensores_para_simular(), sensores_disponiveis)
     instancias = connPostgres.load_sensores(sensores_disponiveis)
@@ -40,8 +41,9 @@ def main():
                     ultimos_dados = novos_dados
 
                 print(f"{ocorrencias_inseridas} dados inseridos\n")
-                sleep(0.25)
-                clear()
+
+                if intervalo:
+                    sleep(intervalo)
 
         if resp == 2:
             print(f"A desenvolver...")

@@ -7,6 +7,8 @@ from dotenv import load_dotenv
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from domain.SensorFumaca import SensorFumaca
 
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from utils.functions import clear
 
 load_dotenv()
 
@@ -37,6 +39,7 @@ def simular(conn, sensores, ultima_ocorrencia=None):
     try:
         data = criar_dados_simulados(sensores, ultima_ocorrencia)
         dados_inseridos = conn.insert_data(data)
+        clear()
 
         return dados_inseridos
     except Exception as e:
