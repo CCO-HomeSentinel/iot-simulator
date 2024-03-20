@@ -8,7 +8,7 @@ class MongoConnection:
         self.connection = self.set_mongo_connection()
 
     def set_mongo_connection(self):
-        mongo_uri = f"mongodb://{os.getenv('MONGODB_USERNAME')}:{os.getenv('MONGODB_PASSWORD')}@{os.getenv('MONGODB_HOST')}:{os.getenv('MONGODB_PORT')}/{os.getenv('MONGODB_DATABASE')}"
+        mongo_uri = f"mongodb://{os.getenv('MONGODB_USERNAME')}:{os.getenv('MONGODB_PASSWORD')}@{os.getenv('MONGODB_HOST')}:{os.getenv('MONGODB_PORT')}/{os.getenv('MONGODB_DATABASE')}?authSource={os.getenv('MONGODB_AUTH_SOURCE')}"
         client = MongoClient(mongo_uri)
         db = client.get_default_database()
 
@@ -22,11 +22,17 @@ class MongoConnection:
         try:
             id_inserido = collection.insert_one(data)
         except Exception as e:
+            print(e)
             return None
         
-        dados_inseridos = self.get_data({'_id': id_inserido.inserted_id})
-        return dados_inseridos
+        return self.get_inseted_data(id_inserido)
         
     def get_data(self, query):
         collection = self.connection.get_collection('sensor_data')
-        return collection.find(query)
+        return collection.find_one(query)
+    
+    def get_inseted_data(self, cursor):
+        dados_inseridos = self.get_data({'_id': cursor.inserted_id})
+        
+        return dados_inseridos['sensors']
+        

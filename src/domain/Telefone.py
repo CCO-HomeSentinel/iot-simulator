@@ -9,3 +9,5 @@ class Telefone(Base):
     numero = Column(String)
     habilitado = Column(String)
     cliente_id = Column(Integer, ForeignKey('cliente.id'))
+
+    __table_args__ = {'extend_existing': True}

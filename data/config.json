@@ -1,6 +1,7 @@
 {
     "fumaca": {
         "tipo": "float",
+        "unidade_medida": "ppm",
         "min": 0,
         "max": 100,
         "regular_min": 0,
@@ -9,6 +10,7 @@
     },
     "gas": {
         "tipo": "float",
+        "unidade_medida": "ppm",
         "min": 0,
         "max": 100,
         "regular_min": 0,
@@ -17,6 +19,7 @@
     },
     "inundacao": {
         "tipo": "boolean",
+        "unidade_medida": "bool",
         "min": false,
         "max": true,
         "regular": false,
@@ -24,6 +27,7 @@
     },
     "luminosidade": {
         "tipo": "float",
+        "unidade_medida": "lux",
         "min": 0,
         "max": 100,
         "regular_min": 0,
@@ -32,6 +36,7 @@
     },
     "som": {
         "tipo": "float",
+        "unidade_medida": "db",
         "min": 0,
         "max": 100,
         "regular_min": 0,
@@ -40,6 +45,7 @@
     },
     "temperatura": {
         "tipo": "float",
+        "unidade_medida": "°C",
         "min": 0,
         "max": 100,
         "regular_min": 17,
@@ -48,6 +54,7 @@
     },
     "umidade": {
         "tipo": "float",
+        "unidade_medida": "%",
         "min": 0,
         "max": 100,
         "regular_min": 5,

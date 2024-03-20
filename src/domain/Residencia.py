@@ -1,6 +1,7 @@
 from sqlalchemy import Column, Integer, String, Boolean, ForeignKey
 from sqlalchemy.orm import relationship
 from .base import Base
+from .Endereco import Endereco
 
 class Residencia(Base):
     __tablename__ = 'residencia'
@@ -9,3 +10,5 @@ class Residencia(Base):
     habilitado = Column(Boolean)
     cliente_id = Column(Integer, ForeignKey('cliente.id'))
     cliente = relationship("Cliente", back_populates="residencias")
+    comodos_monitorados = relationship("ComodoMonitorado", back_populates="residencia")
+    enderecos = relationship("Endereco", back_populates="residencia")
