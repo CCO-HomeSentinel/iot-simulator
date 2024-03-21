@@ -61,12 +61,13 @@ def load_menu():
 
 def load_sensores_disponiveis():
     sensores = ['fumaca', 'gas', 'inundacao', 'luminosidade', 'som', 'temperatura', 'umidade']
+    sensores_removidos = []
     
     for sensor in sensores:
         if not os.getenv(f'SENSOR_{sensor.upper()}') in ('True', 'true', '1'):
-            sensores.remove(sensor)
+            sensores_removidos.append(sensor)
 
-    return sensores
+    return [sensor for sensor in sensores if sensor not in sensores_removidos]
 
 def load_exit():
     clear()
