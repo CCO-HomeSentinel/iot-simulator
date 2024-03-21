@@ -9,5 +9,6 @@ class SensorGas(Sensor):
         return random.random() < 0.001
 
     def simular_dado(self, valor_anterior=None):
-        # a desenvolver
-        return 2
+        if self.is_anomalia:
+            if self.sortear_anomalia():
+                return self.set_range_limite(random.uniform(0, 0.5))
