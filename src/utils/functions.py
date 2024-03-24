@@ -58,6 +58,23 @@ def load_menu():
         load_exit()
     else:
         return 0
+    
+def load_analise_menu():
+    clear()
+    print(f"{bolder}ANÁLISE DE DADOS{not_bolder}\n")
+    print(f"{bolder}1{not_bolder} - Visualizar Dados")
+    print(f"{bolder}2{not_bolder} - Exportar Dados")
+    print(f"{bolder}3{not_bolder} - Voltar\n")
+    resposta = input(f"{bolder}> {not_bolder}")
+
+    if resposta == '1':
+        return 1
+    elif resposta == '2':
+        return 2
+    elif resposta == '3':
+        return 3
+    else:
+        return 0
 
 def load_sensores_disponiveis():
     sensores = ['fumaca', 'gas', 'inundacao', 'luminosidade', 'som', 'temperatura', 'umidade']

@@ -1,7 +1,7 @@
 from connection.MongoConnection import MongoConnection
 from connection.PostgresConnection import PostgresConnection
 from service.simulador import simular, refinar_sensores, ativar_sensores
-from utils.functions import load_init, load_simulator, clear, load_menu, load_sensores_disponiveis, load_exit, load_not_found
+from utils.functions import load_init, load_simulator, clear, load_menu, load_analise_menu, load_sensores_disponiveis, load_exit, load_not_found
 import os
 from time import sleep
 from dotenv import load_dotenv
@@ -47,8 +47,22 @@ def main():
                     sleep(intervalo)
 
         if resp == 2:
-            print(f"A desenvolver...")
-            input("Pressione Enter para continuar...")
+            while True:
+                clear()
+                resp_analise = load_analise_menu()
+
+                if resp_analise == 1:
+                    clear()
+                    print('Visualizando dados...')
+                    sleep(1)
+                elif resp_analise == 2:
+                    clear()
+                    print('Exportando dados...')
+                    sleep(1)
+                elif resp_analise == 3:
+                    break
+                else:
+                    print('Opção inválida')
 
         if resp == 3:
             connMongo.close_connection()
