@@ -61,7 +61,7 @@ def load_menu():
     
 def load_analise_menu():
     clear()
-    print(f"{bolder}ANÁLISE DE DADOS{not_bolder}\n")
+    print(f"{bolder}HOME SENTINEL - ANÁLISE DE DADOS{not_bolder}\n")
     print(f"{bolder}1{not_bolder} - Visualizar Dados")
     print(f"{bolder}2{not_bolder} - Exportar Dados")
     print(f"{bolder}3{not_bolder} - Voltar\n")

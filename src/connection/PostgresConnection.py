@@ -1,6 +1,6 @@
 import os
 import sys
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, text
 from sqlalchemy.orm import sessionmaker
 from dotenv import load_dotenv
 
@@ -59,6 +59,16 @@ class PostgresConnection:
     def get_clientes(self):
         dados = self.session.query(Cliente).all()
         return [self.return_dict(dado) for dado in dados]
+
+    def get_dados_cliente(self, id):
+        dados = self.session.query(Cliente).filter(Cliente.id == id).first()
+        return self.return_dict(dados)
+
+    def execute_select_query(self, query):
+        with self.engine.connect() as connection:
+            result = connection.execute(query)
+            results = result.fetchall()
+            return results
     
     def get_sensores(self):
         dados = self.session.query(Sensor).all()

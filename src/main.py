@@ -1,6 +1,7 @@
 from connection.MongoConnection import MongoConnection
 from connection.PostgresConnection import PostgresConnection
 from service.simulador import simular, refinar_sensores, ativar_sensores
+from service.visualizador import escolher_cliente
 from utils.functions import load_init, load_simulator, clear, load_menu, load_analise_menu, load_sensores_disponiveis, load_exit, load_not_found
 import os
 from time import sleep
@@ -53,8 +54,24 @@ def main():
 
                 if resp_analise == 1:
                     clear()
-                    print('Visualizando dados...')
-                    sleep(1)
+                    cliente = escolher_cliente(clientes)
+
+                    if cliente:
+                        dados = f"""
+
+                        """
+                        print(f'\nDados de {cliente["nome"]}:\n')
+                        print(dados)
+                        print(sensores_disponiveis)
+                        exit()
+                        
+                        # if dados:
+                        #     print(f'\nDados de {cliente["nome"]}:\n')
+                        #     print(dados)
+                        # else:
+                        #     print('Nenhum dado encontrado')
+                        #     sleep(2)
+                    
                 elif resp_analise == 2:
                     clear()
                     print('Exportando dados...')
