@@ -1,4 +1,6 @@
 from time import sleep
+import matplotlib.pyplot as plt
+import numpy as np
 
 def escolher_cliente(clientes):
     print('Escolha o ID de cliente para visualizar os dados\n')
@@ -36,3 +38,10 @@ def escolher_sensor(dados):
         
     print('Sensor não encontrado')
     sleep(2)
+
+def gerar_plot(valores, tempo, sensor_nome):
+    plt.plot(tempo, valores)
+    plt.title(f'Valores de {sensor_nome} ao longo do tempo')
+    plt.xlabel('Tempo')
+    plt.ylabel('Valor')
+    plt.show()
