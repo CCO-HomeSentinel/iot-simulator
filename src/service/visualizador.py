@@ -16,3 +16,6 @@ def escolher_cliente(clientes):
     print('Cliente não encontrado')
     sleep(2)
     return
+
+def escolher_sensor(dados):
+    print(dados)

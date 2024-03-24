@@ -1,11 +1,12 @@
 from connection.MongoConnection import MongoConnection
 from connection.PostgresConnection import PostgresConnection
 from service.simulador import simular, refinar_sensores, ativar_sensores
-from service.visualizador import escolher_cliente
+from service.visualizador import escolher_cliente, escolher_sensor
 from utils.functions import load_init, load_simulator, clear, load_menu, load_analise_menu, load_sensores_disponiveis, load_exit, load_not_found
 import os
 from time import sleep
 from dotenv import load_dotenv
+import utils.query as queries
 
 load_dotenv()
 
@@ -57,13 +58,10 @@ def main():
                     cliente = escolher_cliente(clientes)
 
                     if cliente:
-                        dados = f"""
-
-                        """
-                        print(f'\nDados de {cliente["nome"]}:\n')
-                        print(dados)
-                        print(sensores_disponiveis)
-                        exit()
+                        query = queries.retornar_sensores_por_cliente(cliente["id"], sensores_disponiveis)
+                        dados = connPostgres.execute_select_query(query)
+                        
+                        sensor_escolhido = escolher_sensor(dados)
                         
                         # if dados:
                         #     print(f'\nDados de {cliente["nome"]}:\n')
