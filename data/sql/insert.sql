@@ -29,7 +29,7 @@ VALUES
 INSERT INTO sensor (nome, nome_bruto, fabricante, funcionalidade, tipo, unidade_medida, min, max, regular_min, regular_max, is_anomalia)
 VALUES
   ('HQ12', 'fumaca', 'TechFire', 'Detecta a presença de fumaça no ar', 'float', 'ppm', '0', '100', '0', '0.5', true),
-  ('Kryptalizer', 'gas', 'SafeGas', 'Detecta a presença de gases tóxicos', 'float', 'ppm', '0', '100', '0', '0.5', true),
+  ('Kryptalizer', 'gas', 'SafeGas', 'Detecta a presença de gases tóxicos', 'float', 'ppm', '0', '1000000', '20', '60', true),
   ('Jaxyno', 'inundacao', 'AquaSafe', 'Detecta se há água no ambiente', 'boolean', 'bool', 'false', 'true', 'false', 'false', true),
   ('C3PA Lumos', 'luminosidade', 'BrightTech', 'Mede a intensidade da luz', 'float', 'lux', '0', '100', '0', '80', false),
   ('ASD-DB', 'som', 'AudioSense', 'Registra os níveis de som no ambiente', 'float', 'db', '0', '100', '0', '10', false),

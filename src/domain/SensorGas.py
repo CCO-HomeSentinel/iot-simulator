@@ -1,4 +1,5 @@
 import random
+from datetime import datetime
 from .Sensor import Sensor
 
 class SensorGas(Sensor):
@@ -9,5 +10,16 @@ class SensorGas(Sensor):
         return random.random() < 0.001
 
     def simular_dado(self, valor_anterior=None):
-        # a desenvolver
-        return 2
+        if self.is_anomalia and self.sortear_anomalia():
+            return self.set_range_limite(random.uniform(0, 0.5))
+
+        if valor_anterior:
+            if 10 <= int(datetime.now().strftime('%H')) <= 13 or 17 <= int(datetime.now().strftime('%H')) <= 20:
+                return self.set_range_limite(random.uniform(float(self.regular_min), float(self.regular_max)) + 0.5)
+            else:
+                return self.set_range_limite(valor_anterior + random.uniform(-0.1, 0.1))
+        else:
+            if 10 <= int(datetime.now().strftime('%H')) <= 13 or 17 <= int(datetime.now().strftime('%H')) <= 20:
+                return self.set_range_limite(random.uniform(float(self.regular_min), float(self.regular_max)) + random.uniform(0.5, 1.5))
+            else:
+                return self.set_range_limite(random.uniform(float(self.regular_min), float(self.regular_max)))
