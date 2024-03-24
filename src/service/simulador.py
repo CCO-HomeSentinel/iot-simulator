@@ -43,7 +43,7 @@ def simular(conn, sensores, ultima_ocorrencia=None):
     try:
         data = criar_dados_simulados(sensores, ultima_ocorrencia)
         dados_inseridos = conn.insert_data(data)
-        # clear()
+        clear()
 
         return dados_inseridos
     except Exception as e:

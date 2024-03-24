@@ -33,10 +33,13 @@ class MongoConnection:
     
     def get_data_list(self, query):
         collection = self.connection.get_collection('sensor_data')
-        return collection.find(query)
+        return self.return_list(collection.find(query))
     
     def get_inserted_data(self, cursor):
         dados_inseridos = self.get_data({'_id': cursor.inserted_id})
         
         return dados_inseridos['sensores']
+    
+    def return_list(self, cursor):
+        return [doc for doc in cursor]
         
