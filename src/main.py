@@ -61,14 +61,9 @@ def main():
                         query = queries.retornar_sensores_por_cliente(cliente["id"], sensores_disponiveis)
                         dados = connPostgres.execute_select_query(query)
                         
-                        sensor_escolhido = escolher_sensor(dados)
+                        clear()
+                        id_sensor_comodo_escolhido = escolher_sensor(dados)
                         
-                        # if dados:
-                        #     print(f'\nDados de {cliente["nome"]}:\n')
-                        #     print(dados)
-                        # else:
-                        #     print('Nenhum dado encontrado')
-                        #     sleep(2)
                     
                 elif resp_analise == 2:
                     clear()
