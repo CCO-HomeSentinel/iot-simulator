@@ -1,10 +1,12 @@
 from connection.MongoConnection import MongoConnection
 from connection.PostgresConnection import PostgresConnection
 from service.simulador import simular, refinar_sensores, ativar_sensores
-from utils.functions import load_init, load_simulator, clear, load_menu, load_sensores_disponiveis, load_exit, load_not_found
+from service.visualizador import escolher_cliente, escolher_sensor, gerar_plot
+from utils.functions import load_init, load_simulator, clear, load_menu, load_analise_menu, load_sensores_disponiveis, load_exit, load_not_found
 import os
 from time import sleep
 from dotenv import load_dotenv
+import utils.query as queries
 
 load_dotenv()
 
@@ -47,8 +49,36 @@ def main():
                     sleep(intervalo)
 
         if resp == 2:
-            print(f"A desenvolver...")
-            input("Pressione Enter para continuar...")
+            while True:
+                clear()
+                resp_analise = load_analise_menu()
+
+                if resp_analise == 1:
+                    clear()
+                    cliente = escolher_cliente(clientes)
+
+                    if cliente:
+                        query = queries.retornar_sensores_por_cliente(cliente["id"], sensores_disponiveis)
+                        dados = connPostgres.execute_select_query(query)
+                        
+                        clear()
+                        id_sensor_comodo_escolhido, sensor_nome = escolher_sensor(dados)
+                        filtro = {f"sensores.{sensor_nome}.comodo_monitorado_sensor_id": id_sensor_comodo_escolhido}
+                        dados = connMongo.get_data_list(filtro)
+                        
+                        valores = [dado['sensores'][sensor_nome]['valor'] for dado in dados]
+                        tempos = [dado['timestamp'] for dado in dados]
+                        gerar_plot(valores, tempos, sensor_nome)
+
+                        exit()                    
+                elif resp_analise == 2:
+                    clear()
+                    print('Exportando dados...')
+                    sleep(1)
+                elif resp_analise == 3:
+                    break
+                else:
+                    print('Opção inválida')
 
         if resp == 3:
             connMongo.close_connection()
