@@ -23,15 +23,19 @@ def ativar_sensores(instancias):
 def criar_dados_simulados(sensores, ultima_ocorrencia=None):
     ocorrencia = {
         'timestamp': datetime.now().isoformat(),
-        'sensors': {}
+        'sensores': {}
     }
 
     for sensor in sensores:   
         if ultima_ocorrencia is None:
             sensor_data = sensor_funcao[sensor['nome_bruto']].simular_dado()
         else: 
-            sensor_data = sensor_funcao[sensor['nome_bruto']].simular_dado(ultima_ocorrencia[sensor['nome_bruto']])
-        ocorrencia['sensors'][sensor['nome_bruto']] = sensor_data
+            # print(ultima_ocorrencia)
+            sensor_data = sensor_funcao[sensor['nome_bruto']].simular_dado(ultima_ocorrencia[sensor['nome_bruto']]['valor'])
+
+        ocorrencia['sensores'][sensor['nome_bruto']] = {}
+        ocorrencia['sensores'][sensor['nome_bruto']]['comodo_monitorado_sensor_id'] = sensor['id_comodo_monitorado_sensor']
+        ocorrencia['sensores'][sensor['nome_bruto']]['valor'] = sensor_data
 
     return ocorrencia
 
@@ -39,7 +43,7 @@ def simular(conn, sensores, ultima_ocorrencia=None):
     try:
         data = criar_dados_simulados(sensores, ultima_ocorrencia)
         dados_inseridos = conn.insert_data(data)
-        clear()
+        # clear()
 
         return dados_inseridos
     except Exception as e:

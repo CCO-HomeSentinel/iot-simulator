@@ -34,5 +34,5 @@ class MongoConnection:
     def get_inseted_data(self, cursor):
         dados_inseridos = self.get_data({'_id': cursor.inserted_id})
         
-        return dados_inseridos['sensors']
+        return dados_inseridos['sensores']
         
