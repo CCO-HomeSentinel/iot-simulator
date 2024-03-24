@@ -32,7 +32,7 @@ def escolher_sensor(dados):
 
     for i, dado in enumerate(dados):
         if i == escolha:
-           return dado[18]
+           return dado[18], dado[22]
         
     print('Sensor não encontrado')
     sleep(2)

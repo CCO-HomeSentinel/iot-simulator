@@ -62,8 +62,14 @@ def main():
                         dados = connPostgres.execute_select_query(query)
                         
                         clear()
-                        id_sensor_comodo_escolhido = escolher_sensor(dados)
+                        id_sensor_comodo_escolhido, sensor_nome = escolher_sensor(dados)
+                        print(id_sensor_comodo_escolhido, sensor_nome)
+                        filtro = {f" sensores.{sensor_nome}.comodo_monitorado_sensor_id": id_sensor_comodo_escolhido }
+                        print(filtro)
+                        dados = connMongo.get_data_list(filtro)
+                        print(dados)
                         
+                        exit()
                     
                 elif resp_analise == 2:
                     clear()
