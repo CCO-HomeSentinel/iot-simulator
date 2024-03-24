@@ -15,12 +15,11 @@ class SensorGas(Sensor):
 
         if valor_anterior:
             if 10 <= int(datetime.now().strftime('%H')) <= 13 or 17 <= int(datetime.now().strftime('%H')) <= 20:
-                return self.set_range_limite(random.uniform(float(self.min), float(self.max)) + 0.5)
+                return self.set_range_limite(random.uniform(float(self.regular_min), float(self.regular_max)) + 0.5)
             else:
                 return self.set_range_limite(valor_anterior + random.uniform(-0.1, 0.1))
         else:
-            # sensibilidade do sensor de gás é afetado durante o horário de almoço e janta.
             if 10 <= int(datetime.now().strftime('%H')) <= 13 or 17 <= int(datetime.now().strftime('%H')) <= 20:
-                return self.set_range_limite(random.uniform(float(self.min), float(self.max)) + random.uniform(0.5, 1.5))
+                return self.set_range_limite(random.uniform(float(self.regular_min), float(self.regular_max)) + random.uniform(0.5, 1.5))
             else:
-                return self.set_range_limite(random.uniform(float(self.min), float(self.max)))
+                return self.set_range_limite(random.uniform(float(self.regular_min), float(self.regular_max)))
