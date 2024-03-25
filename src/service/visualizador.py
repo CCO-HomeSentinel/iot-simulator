@@ -44,4 +44,5 @@ def gerar_plot(valores, tempo, sensor_nome):
     plt.title(f'Valores de {sensor_nome} ao longo do tempo')
     plt.xlabel('Tempo')
     plt.ylabel('Valor')
+    plt.xticks([])
     plt.show()

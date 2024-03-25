@@ -66,7 +66,7 @@ class PostgresConnection:
 
     def execute_select_query(self, query):
         with self.engine.connect() as connection:
-            result = connection.execute(query)
+            result = connection.execute(text(query))
             results = result.fetchall()
             return results
     
