@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Boolean
+from sqlalchemy import Column, Integer, String, Boolean, UniqueConstraint
 from sqlalchemy.orm import relationship
 from .base import Base
 from .Residencia import Residencia
@@ -16,3 +16,9 @@ class Cliente(Base):
     residencias = relationship("Residencia", back_populates="cliente")
 
     __table_args__ = {'extend_existing': True}
+
+    __table_args__ = (
+        UniqueConstraint('cpf', name='cpf_UNIQUE'),
+        UniqueConstraint('email', name='email_UNIQUE'),
+        {'extend_existing': True}
+    )

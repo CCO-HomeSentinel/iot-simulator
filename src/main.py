@@ -2,7 +2,7 @@ from connection.MongoConnection import MongoConnection
 from connection.MySQLConnection import MySQLConnection
 from service.simulador import simular, refinar_sensores, ativar_sensores
 from service.visualizador import escolher_cliente, escolher_sensor, gerar_plot
-from utils.functions import load_init, load_simulator, clear, load_menu, load_analise_menu, load_sensores_disponiveis, load_exit, load_not_found
+from utils.functions import load_init, clear, load_menu, load_analise_menu, load_sensores_disponiveis, load_exit, load_not_found
 import os
 from time import sleep
 from dotenv import load_dotenv
@@ -24,6 +24,20 @@ def main():
     instancias = connMySQL.load_sensores(sensores_disponiveis)
     ativar_sensores(instancias)
     
+    print("\n\n\n")
+    print(ocorrencias_inseridas)
+    print("\n\n\n")
+    print(ultimos_dados)
+    print("\n\n\n")
+    print(clientes)
+    print("\n\n\n")
+    print(sensores_disponiveis)
+    print("\n\n\n")
+    print(sensores)
+    print("\n\n\n")
+    print(instancias)
+    print("\n\n\n")
+
     while True:
         clear()
 

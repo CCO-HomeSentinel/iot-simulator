@@ -9,7 +9,6 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from domain.Cliente import Cliente
 from domain.base import Base
 from domain.ComodoMonitorado import ComodoMonitorado
-from domain.ComodoMonitoradoSensor import ComodoMonitoradoSensor
 from domain.Endereco import Endereco
 from domain.Residencia import Residencia
 from domain.Sensor import Sensor
@@ -74,8 +73,8 @@ class MySQLConnection:
         dados = self.session.query(Sensor).all()
         return [self.return_dict(dado) for dado in dados]
     
-    def get_sensores_comodos_monitorados(self):
-        dados = self.session.query(ComodoMonitoradoSensor).all()
+    def get_sensores(self):
+        dados = self.session.query(Sensor).filter(Sensor.comodo_monitorado_id != None).all()
         return [self.return_dict(dado) for dado in dados]
     
     def load_sensores(self, sensores_disponivies):
