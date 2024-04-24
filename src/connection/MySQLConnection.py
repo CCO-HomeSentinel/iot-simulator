@@ -35,11 +35,11 @@ sensor_dict = {
     'umidade': SensorUmidade
 }
 
-class PostgresConnection:
+class MySQLConnection:
     def __init__(self):
         self.engine = create_engine(
-            f"postgresql://{os.getenv('POSTGRES_USERNAME')}:{os.getenv('POSTGRES_PASSWORD')}@"
-            f"{os.getenv('POSTGRES_HOST')}:{os.getenv('POSTGRES_PORT')}/{os.getenv('POSTGRES_DATABASE')}"
+            f"mysql://{os.getenv('MYSQL_USERNAME')}:{os.getenv('MYSQL_PASSWORD')}@"
+            f"{os.getenv('MYSQL_HOST')}:{os.getenv('MYSQL_PORT')}/{os.getenv('MYSQL_DATABASE')}"
         )
         Session = sessionmaker(bind=self.engine)
         self.session = Session()
@@ -119,7 +119,7 @@ class PostgresConnection:
         return sensores_a_monitorar
 
 if __name__ == "__main__":
-    postgres_conn = PostgresConnection()
+    mysql_conn = MySQLConnection()
     
-    session = postgres_conn.get_session()
-    postgres_conn.close_connection()
+    session = mysql_conn.get_session()
+    mysql_conn.close_connection()

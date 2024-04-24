@@ -1,5 +1,5 @@
 from connection.MongoConnection import MongoConnection
-from connection.PostgresConnection import PostgresConnection
+from connection.MySQLConnection import MySQLConnection
 from service.simulador import simular, refinar_sensores, ativar_sensores
 from service.visualizador import escolher_cliente, escolher_sensor, gerar_plot
 from utils.functions import load_init, load_simulator, clear, load_menu, load_analise_menu, load_sensores_disponiveis, load_exit, load_not_found
@@ -16,12 +16,12 @@ def main():
     ultimos_dados = None
     load_init(skip=os.getenv('SKIP_INTRO') in ('True', 'true', '1'))
     connMongo = MongoConnection()
-    connPostgres = PostgresConnection()
+    connMySQL = MySQLConnection()
 
-    clientes = connPostgres.get_clientes()
+    clientes = connMySQL.get_clientes()
     sensores_disponiveis = load_sensores_disponiveis()
-    sensores = refinar_sensores(connPostgres.get_sensores_para_simular(), sensores_disponiveis)
-    instancias = connPostgres.load_sensores(sensores_disponiveis)
+    sensores = refinar_sensores(connMySQL.get_sensores_para_simular(), sensores_disponiveis)
+    instancias = connMySQL.load_sensores(sensores_disponiveis)
     ativar_sensores(instancias)
     
     while True:
@@ -59,7 +59,7 @@ def main():
 
                     if cliente:
                         query = queries.retornar_sensores_por_cliente(cliente["id"], sensores_disponiveis)
-                        dados = connPostgres.execute_select_query(query)
+                        dados = connMySQL.execute_select_query(query)
                         
                         clear()
                         id_sensor_comodo_escolhido, sensor_nome = escolher_sensor(dados)
@@ -82,7 +82,7 @@ def main():
 
         if resp == 3:
             connMongo.close_connection()
-            connPostgres.close_connection()
+            connMySQL.close_connection()
             break
 
         clear()
