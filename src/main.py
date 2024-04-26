@@ -13,8 +13,7 @@ def main():
     intervalo_geracao = float(os.getenv('INTERVALO_SIMULADOR'))
     intervalo_envio = float(os.getenv('INTERVALO_ENVIO'))
 
-    ocorrencias_inseridas = 0
-    ultimos_dados = dict()
+    dados = {'registros': []}
 
     load_init(skip=os.getenv('SKIP_INTRO') in ('True', 'true', '1'))
     connMongo = MongoConnection()
@@ -35,17 +34,19 @@ def main():
             load_not_found()
             break
 
-        novos_dados = simular(connMongo, sensores, ultimos_dados)
+        novos_dados = simular(instancias, dados['registros'][-1] if dados['registros'] else None)
 
-        if novos_dados:
-            ocorrencias_inseridas+=1
-            ultimos_dados = novos_dados
+        # for dado in novos_dados:
+
+        # if novos_dados:
+        #     ocorrencias_inseridas+=1
+        #     ultimos_dados = novos_dados
                 
-            clear()
-            print(f"{ocorrencias_inseridas} dados inseridos\n")
+        #     clear()
+        #     print(f"{ocorrencias_inseridas} dados inseridos\n")
 
-            if intervalo_geracao:
-                sleep(intervalo_geracao)
+        #     if intervalo_geracao:
+        #         sleep(intervalo_geracao)
 
 
 if __name__ == '__main__':

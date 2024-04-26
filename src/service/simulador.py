@@ -38,7 +38,7 @@ def criar_dados_simulados(sensores, ultima_ocorrencia=None):
 
     return ocorrencia
 
-def simular(conn, sensores, ultima_ocorrencia=None):
+def simular(sensores, ultima_ocorrencia):
     try:
         data = criar_dados_simulados(sensores, ultima_ocorrencia)
         dados_inseridos = conn.insert_data(data)
