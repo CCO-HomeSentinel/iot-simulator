@@ -76,15 +76,14 @@ def load_analise_menu():
     else:
         return 0
 
-def load_sensores_disponiveis():
-    sensores = ['fumaca', 'gas', 'inundacao', 'luminosidade', 'som', 'temperatura', 'umidade']
-    sensores_removidos = []
-    
-    for sensor in sensores:
-        if not os.getenv(f'SENSOR_{sensor.upper()}') in ('True', 'true', '1'):
-            sensores_removidos.append(sensor)
+def load_sensores_disponiveis(lista_banco):
+    sensores_disponiveis = []
 
-    return [sensor for sensor in sensores if sensor not in sensores_removidos]
+    for sensor in lista_banco:
+        if os.getenv(f"SENSOR_{sensor['tipo'].upper()}") in ('True', 'true', '1'):
+            sensores_disponiveis.append(sensor['tipo'])
+
+    return sensores_disponiveis
 
 def load_exit():
     clear()

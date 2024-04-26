@@ -12,6 +12,7 @@ from domain.ComodoMonitorado import ComodoMonitorado
 from domain.Endereco import Endereco
 from domain.Residencia import Residencia
 from domain.Sensor import Sensor
+from domain.ModeloSensor import ModeloSensor
 from domain.Telefone import Telefone
 
 from domain.SensorFumaca import SensorFumaca
@@ -70,53 +71,31 @@ class MySQLConnection:
             return results
     
     def get_sensores(self):
-        dados = self.session.query(Sensor).all()
+        dados = self.session.query(ModeloSensor).all()
         return [self.return_dict(dado) for dado in dados]
     
-    def get_sensores(self):
+    def get_sensores_comodos_monitorados(self):
         dados = self.session.query(Sensor).filter(Sensor.comodo_monitorado_id != None).all()
         return [self.return_dict(dado) for dado in dados]
     
     def load_sensores(self, sensores_disponivies):
         objetos_instanciados = []
-        sensores_banco = self.get_sensores()
 
-        for sensor in sensores_banco:
-            if sensor['nome_bruto'] in sensores_disponivies:
-                objetos_instanciados.append(sensor_dict[sensor['nome_bruto']](sensor['nome'], sensor['nome_bruto'], sensor['fabricante'], sensor['funcionalidade'], sensor['tipo'], sensor['unidade_medida'], sensor['min'], sensor['max'], sensor['regular_min'], sensor['regular_max'], sensor['is_anomalia']))
+        for sensor in sensores_disponivies:
+            if sensor[12] in sensor_dict:
+                objetos_instanciados.append(sensor_dict[sensor[12]](sensor[10], sensor[11], sensor[12], sensor[13], sensor[14], sensor[15], sensor[16], sensor[17], sensor[18], sensor[19], sensor[20], sensor[21]))
 
         return objetos_instanciados
     
     def get_sensores_para_simular(self):
-        sensores_a_monitorar = []
-        sensores = self.get_sensores()
-        sensores_comodos_monitorados = self.get_sensores_comodos_monitorados()
-
-        for sensor_comodo in sensores_comodos_monitorados:
-            sensor_a_adicionar = {}
-
-            for sensor in sensores:
-                if sensor['id'] == sensor_comodo['sensor_id']:
-                    sensor_a_adicionar['id_comodo_monitorado_sensor'] = sensor_comodo['id']
-                    sensor_a_adicionar['id_comodo'] = sensor_comodo['comodo_monitorado_id']
-                    sensor_a_adicionar['id_sensor'] = sensor['id']
-                    sensor_a_adicionar['nome'] = sensor['nome']
-                    sensor_a_adicionar['nome_bruto'] = sensor['nome_bruto']
-                    sensor_a_adicionar['fabricante'] = sensor['fabricante']
-                    sensor_a_adicionar['funcionalidade'] = sensor['funcionalidade']
-                    sensor_a_adicionar['tipo'] = sensor['tipo']
-                    sensor_a_adicionar['unidade_medida'] = sensor['unidade_medida']
-                    sensor_a_adicionar['min'] = sensor['min']
-                    sensor_a_adicionar['max'] = sensor['max']
-                    sensor_a_adicionar['regular_min'] = sensor['regular_min']
-                    sensor_a_adicionar['regular_max'] = sensor['regular_max']
-                    sensor_a_adicionar['is_anomalia'] = sensor['is_anomalia']
-                    break
-
-            sensores_a_monitorar.append(sensor_a_adicionar)
-
-        return sensores_a_monitorar
-
+        query = """
+            SELECT * 
+            FROM comodo_monitorado cm
+	            JOIN sensor ss ON ss.comodo_monitorado_id = cm.id
+	            JOIN modelo_sensor ms ON ss.modelo_sensor_id = ms.id;
+        """
+        return self.execute_select_query(query)
+        
 if __name__ == "__main__":
     mysql_conn = MySQLConnection()
     

@@ -15,7 +15,7 @@ sensor_funcao = {}
 
 def ativar_sensores(instancias):
     for instancia in instancias:
-        sensor_funcao[instancia.nome_bruto] = instancia
+        sensor_funcao[instancia.tipo] = instancia
 
     return sensor_funcao
     
@@ -49,12 +49,11 @@ def simular(conn, sensores, ultima_ocorrencia=None):
         print(f'Erro ao inserir dados: {e}')
         exit()
 
-def refinar_sensores(sensores, sensores_disponiveis):
-    sensores_finais = []
+def refinar_sensores(sensores_clientes, sensores_disponiveis):
+    sensores_clientes_disponiveis = []
 
-    for nome_sensor in sensores_disponiveis:
-        for sensor in sensores:
-            if (nome_sensor == sensor['nome_bruto']):
-                sensores_finais.append(sensor)
-                
-    return sensores_finais
+    for sensor in sensores_clientes:
+        if sensor[12] in sensores_disponiveis:
+            sensores_clientes_disponiveis.append(sensor)
+
+    return sensores_clientes_disponiveis

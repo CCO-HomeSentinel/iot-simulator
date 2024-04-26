@@ -18,25 +18,16 @@ def main():
     connMongo = MongoConnection()
     connMySQL = MySQLConnection()
 
-    clientes = connMySQL.get_clientes()
-    sensores_disponiveis = load_sensores_disponiveis()
-    sensores = refinar_sensores(connMySQL.get_sensores_para_simular(), sensores_disponiveis)
-    instancias = connMySQL.load_sensores(sensores_disponiveis)
+    sensores_banco = connMySQL.get_sensores()
+    sensores_disponiveis = load_sensores_disponiveis(sensores_banco)
+    sensores_clientes = connMySQL.get_sensores_para_simular()
+
+    sensores = refinar_sensores(sensores_clientes, sensores_disponiveis)
+    instancias = connMySQL.load_sensores(sensores)
+
     ativar_sensores(instancias)
     
-    print("\n\n\n")
-    print(ocorrencias_inseridas)
-    print("\n\n\n")
-    print(ultimos_dados)
-    print("\n\n\n")
-    print(clientes)
-    print("\n\n\n")
-    print(sensores_disponiveis)
-    print("\n\n\n")
-    print(sensores)
-    print("\n\n\n")
-    print(instancias)
-    print("\n\n\n")
+    exit()
 
     while True:
         clear()

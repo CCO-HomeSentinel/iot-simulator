@@ -18,7 +18,8 @@ class ModeloSensor(Base):
 
     __table_args__ = {'extend_existing': True}
 
-    def __init__(self, nome, tipo, fabricante, funcionalidade, tipo_medida, unidade_medida, min_val, max_val, regular_min_val, regular_max_val, is_anomalia):
+    def __init__(self, id, nome, tipo, fabricante, funcionalidade, tipo_medida, unidade_medida, min_val, max_val, regular_min_val, regular_max_val, is_anomalia):
+        self.id = id
         self.nome = nome
         self.tipo = tipo
         self.fabricante = fabricante
@@ -42,4 +43,4 @@ class ModeloSensor(Base):
             return eval(self.tipo_medida)(valor)
         
     def to_string(self):
-        return f'Nome: {self.nome}, Tipo: {self.tipo}, Fabricante: {self.fabricante}, Funcionalidade: {self.funcionalidade}, Tipo Medida: {self.tipo_medida}, Unidade de Medida: {self.unidade_medida}, Min: {self.min}, Max: {self.max}, Regular Min: {self.regular_min}, Regular Max: {self.regular_max}, Is Anomalia: {self.is_anomalia}'
+        return f'ID: {self.id},\nNome: {self.nome},\nTipo: {self.tipo},\nFabricante: {self.fabricante},\nFuncionalidade: {self.funcionalidade},\nTipo Medida: {self.tipo_medida},\nUnidade de Medida: {self.unidade_medida},\nMin: {self.min},\nMax: {self.max},\nRegular Min: {self.regular_min},\nRegular Max: {self.regular_max},\nIs Anomalia: {self.is_anomalia}'
