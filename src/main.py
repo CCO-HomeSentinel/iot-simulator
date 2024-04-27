@@ -41,8 +41,7 @@ def main():
         quantidade_rodadas += 1
                 
         clear()
-        # print(f"{len(dados['registros'])} dados simulados\n{quantidade_envios} envios realizados\n{quantidade_rodadas} rodadas\n")
-        print(novos_dados)
+        print(f"{len(dados['registros'])} dados simulados\n{quantidade_envios} envios realizados\n{quantidade_rodadas} rodadas\n")
 
         if (datetime.now() - start).seconds >= intervalo_envio:
             enviar_json(dados)
