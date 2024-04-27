@@ -7,7 +7,7 @@ class SensorFumaca(ModeloSensor):
         super().__init__(id, nome, nome_bruto, fabricante, funcionalidade, tipo, unidade_medida, min_val, max_val, regular_min_val, regular_max_val, is_anomalia)
 
     def sortear_anomalia(self):
-        return random.random() < 0.0001, 3
+        return random.random() < 0.0001
 
     def simular_dado(self, ultima_ocorrencia=None):
         if self.is_anomalia and self.sortear_anomalia():

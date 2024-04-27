@@ -15,11 +15,11 @@ class SensorGas(ModeloSensor):
 
         if ultima_ocorrencia:
             if 10 <= int(datetime.now().strftime('%H')) <= 13 or 17 <= int(datetime.now().strftime('%H')) <= 20:
-                return self.set_range_limite(random.uniform(float(self.regular_min), float(self.regular_max)) + 0.5)
+                return round(self.set_range_limite(random.uniform(float(self.regular_min), float(self.regular_max)) + 0.5), 3)
             else:
-                return self.set_range_limite(ultima_ocorrencia + random.uniform(-0.1, 0.1))
+                return round(self.set_range_limite(ultima_ocorrencia + random.uniform(-0.1, 0.1)), 3)
         else:
             if 10 <= int(datetime.now().strftime('%H')) <= 13 or 17 <= int(datetime.now().strftime('%H')) <= 20:
-                return self.set_range_limite(random.uniform(float(self.regular_min), float(self.regular_max)) + random.uniform(0.5, 1.5))
+                return round(self.set_range_limite(random.uniform(float(self.regular_min), float(self.regular_max)) + random.uniform(0.5, 1.5)), 3)
             else:
-                return self.set_range_limite(random.uniform(float(self.regular_min), float(self.regular_max)))
+                return round(self.set_range_limite(random.uniform(float(self.regular_min), float(self.regular_max))), 3)
