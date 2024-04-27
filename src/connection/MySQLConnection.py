@@ -19,6 +19,7 @@ from domain.SensorFumaca import SensorFumaca
 from domain.SensorGas import SensorGas
 from domain.SensorInundacao import SensorInundacao
 from domain.SensorLuminosidade import SensorLuminosidade
+from domain.SensorMovimento import SensorMovimento
 from domain.SensorSom import SensorSom
 from domain.SensorTemperatura import SensorTemperatura
 from domain.SensorUmidade import SensorUmidade
@@ -30,6 +31,7 @@ sensor_dict = {
     'gas': SensorGas,
     'inundacao': SensorInundacao,
     'luminosidade': SensorLuminosidade,
+    'movimento': SensorMovimento,
     'som': SensorSom,
     'temperatura': SensorTemperatura,
     'umidade': SensorUmidade

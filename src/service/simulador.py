@@ -25,7 +25,8 @@ def criar_dados_simulados(sensores, ultima_ocorrencia=None):
         'sensores': {}
     }
 
-    for sensor in sensores:   
+    for sensor in sensores:
+        print(sensor)
         if ultima_ocorrencia is None:
             sensor_data = sensor_funcao[sensor['nome_bruto']].simular_dado()
         else: 
@@ -39,12 +40,28 @@ def criar_dados_simulados(sensores, ultima_ocorrencia=None):
     return ocorrencia
 
 def simular(sensores, ultima_ocorrencia):
-    try:
-        data = criar_dados_simulados(sensores, ultima_ocorrencia)
-        dados_inseridos = conn.insert_data(data)
-        clear()
+    print(sensores)
+    print(ultima_ocorrencia)
+    data_atual = datetime.now().isoformat().split('.')[0]
 
-        return dados_inseridos
+    try:
+        ocorrencias = []
+
+        for sensor in sensores:
+            sensor_data = {}
+            sensor_data['timestamp'] = data_atual
+            sensor_data['sensor_id'] = sensor.id
+
+            if ultima_ocorrencia is None:
+                sensor_data['valor'] = sensor_funcao[sensor.tipo].simular_dado()
+            else: 
+                sensor_data['valor'] = sensor_funcao[sensor.tipo].simular_dado(ultima_ocorrencia)
+
+            print(sensor_data)
+            ocorrencias.append(sensor_data)
+            # return dados_inseridos
+
+        return ocorrencias
     except Exception as e:
         print(f'Erro ao inserir dados: {e}')
         exit()

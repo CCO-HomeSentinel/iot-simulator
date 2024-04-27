@@ -8,6 +8,6 @@ class SensorUmidade(ModeloSensor):
     def sortear_anomalia(self):
         return random.random() < 0.001
 
-    def simular_dado(self, valor_anterior=None):
+    def simular_dado(self, ultima_ocorrencia=None):
         # a desenvolver
         return 2

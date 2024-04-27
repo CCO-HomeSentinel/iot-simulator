@@ -1,4 +1,3 @@
-from connection.MongoConnection import MongoConnection
 from connection.MySQLConnection import MySQLConnection
 from service.simulador import simular, refinar_sensores, ativar_sensores
 from utils.functions import load_init, clear, load_sensores_disponiveis, load_not_found
@@ -16,7 +15,6 @@ def main():
     dados = {'registros': []}
 
     load_init(skip=os.getenv('SKIP_INTRO') in ('True', 'true', '1'))
-    connMongo = MongoConnection()
     connMySQL = MySQLConnection()
 
     sensores_banco = connMySQL.get_sensores()
