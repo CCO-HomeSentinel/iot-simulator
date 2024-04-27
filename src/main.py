@@ -51,6 +51,5 @@ def main():
             
         sleep(intervalo_geracao)
 
-
 if __name__ == '__main__':
     main()

@@ -25,7 +25,3 @@ def enviar_json(json):
     else:
         destruir_arquivo(path)
         return True
-
-
-
-

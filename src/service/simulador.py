@@ -1,13 +1,5 @@
-import sys
 from datetime import datetime
-import os
 from dotenv import load_dotenv
-
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-from domain.SensorFumaca import SensorFumaca
-
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-from utils.functions import clear
 
 load_dotenv()
 
@@ -19,11 +11,7 @@ def ativar_sensores(instancias):
 
     return sensor_funcao
 
-    return ocorrencia
-
 def simular(sensores, ultima_ocorrencia):
-    print(sensores)
-    print(ultima_ocorrencia)
     data_atual = datetime.now().isoformat().split('.')[0]
 
     try:
