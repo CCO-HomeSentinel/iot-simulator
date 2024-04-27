@@ -30,7 +30,7 @@ VALUES
   ('Water Level Alarm', 'inundacao', 'Homesen', 'Detecta se há água no ambiente', 'boolean', 'bool', 'false', 'true', 'false', 'false', true),
   ('TSL2561', 'luminosidade', 'Austria Microsystems', 'Mede a intensidade da luz', 'float', 'lux', '0', '100', '0', '90', false),
   ('HISSMV', 'movimento', 'Geonav', 'Detecta ações de movimento no espaço', 'boolean', 'bool', 'false', 'true', 'false', 'true', false), 
-  ('KY-038', 'som', 'EletroGate', 'Registra os níveis de som no ambiente', 'float', 'db', '0', '100', '0', '200', true),
+  ('KY-038', 'som', 'EletroGate', 'Registra os níveis de som no ambiente', 'float', 'db', '0', '400', '0', '200', true),
   ('EM THW 100', 'temperatura', 'Khomp', 'Mede a temperatura ambiente', 'float', '°C', '0', '100', '3', '44', true),
   ('EM THW 100', 'umidade', 'Khomp', 'Monitora os níveis de umidade no ar', 'float', '%', '0', '100', '20', '65', true);
 
