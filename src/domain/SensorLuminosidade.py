@@ -34,13 +34,13 @@ class SensorLuminosidade(ModeloSensor):
 
         return self.set_range_limite(luminosidade_base)
 
-    def simular_dado(self, valor_anterior=None):
+    def simular_dado(self, ultima_ocorrencia=None):
         minutos = int(datetime.now().strftime('%H')) * 60 + int(datetime.now().strftime('%M'))
 
-        if valor_anterior is None:
+        if ultima_ocorrencia is None:
             return self.horario_validator(minutos)
         else:
             if self.is_anomalia and self.sortear_anomalia():
                 return self.horario_validator(minutos)
             else:
-                return round(self.set_range_limite(valor_anterior + random.uniform(-0.1, 0.1)), 3)
+                return round(self.set_range_limite(ultima_ocorrencia + random.uniform(-0.1, 0.1)), 3)
