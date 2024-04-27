@@ -22,7 +22,6 @@ from domain.SensorLuminosidade import SensorLuminosidade
 from domain.SensorMovimento import SensorMovimento
 from domain.SensorSom import SensorSom
 from domain.SensorTemperatura import SensorTemperatura
-from domain.SensorUmidade import SensorUmidade
 
 load_dotenv()
 
@@ -34,7 +33,6 @@ sensor_dict = {
     'movimento': SensorMovimento,
     'som': SensorSom,
     'temperatura': SensorTemperatura,
-    'umidade': SensorUmidade
 }
 
 class MySQLConnection:

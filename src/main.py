@@ -6,7 +6,6 @@ from time import sleep
 from dotenv import load_dotenv
 import os
 from datetime import datetime
-import utils.query as queries
 
 load_dotenv()
 
@@ -30,14 +29,14 @@ def main():
     instancias = connMySQL.load_sensores(sensores)
     ativar_sensores(instancias)
 
+    if not sensores:
+        load_not_found()
+        exit()
+
     while True:
-        clear()
+        ultimos_dados = dados['registros'][-len(instancias):] if dados['registros'] else None
 
-        if not sensores:
-            load_not_found()
-            break
-
-        novos_dados = simular(instancias, dados['registros'][-1] if dados['registros'] else None)
+        novos_dados = simular(instancias, ultimos_dados)
         dados['registros'].extend(novos_dados)
         quantidade_rodadas += 1
                 

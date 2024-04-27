@@ -6,8 +6,13 @@ class SensorInundacao(ModeloSensor):
         super().__init__(id, nome, nome_bruto, fabricante, funcionalidade, tipo, unidade_medida, min_val, max_val, regular_min_val, regular_max_val, is_anomalia)
 
     def sortear_anomalia(self):
-        return random.random() < 0.001
+        return random.random() < 0.0001
 
     def simular_dado(self, ultima_ocorrencia=None):
-        # a desenvolver
-        return False
+        if ultima_ocorrencia is None:
+            return self.sortear_anomalia()
+        else:
+            if random.random() < 0.0000001:
+                return not ultima_ocorrencia
+            else:
+                return ultima_ocorrencia

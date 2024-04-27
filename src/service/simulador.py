@@ -24,16 +24,22 @@ def simular(sensores, ultima_ocorrencia):
 
             if ultima_ocorrencia is None:
                 sensor_data['valor'] = sensor_funcao[sensor.tipo].simular_dado()
-            else: 
-                sensor_data['valor'] = sensor_funcao[sensor.tipo].simular_dado(None) #alterar depois
+            else:
+                sensor_data['valor'] = sensor_funcao[sensor.tipo].simular_dado(buscar_ultimo_dado(ultima_ocorrencia, sensor.id))
 
-            print(sensor_data)
             ocorrencias.append(sensor_data)
 
         return ocorrencias
     except Exception as e:
         print(f'Erro ao inserir dados: {e}')
         exit()
+
+def buscar_ultimo_dado(ultimos_dados, sensor_id):
+    for dado in ultimos_dados:
+        if dado['sensor_id'] == sensor_id:
+            return dado['valor']
+
+    return None
 
 def refinar_sensores(sensores_clientes, sensores_disponiveis):
     sensores_clientes_disponiveis = []
