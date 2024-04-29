@@ -11,24 +11,23 @@ class SensorSom(ModeloSensor):
     
     def validate_horario(self, horas):
         if 0 <= horas < 6:
-            return random.randint(2, 20)
+            return round(random.randint(0, 15), 3)
         elif 6 <= horas < 12:
-            return random.randint(20, 40)
+            return round(random.randint(20, 40), 3)
         elif 12 <= horas < 24:
-            return random.randint(40, 60)
+            return round(random.randint(40, 120), 3)
         else:
-            return random.randint(40, 60)
-        
+            return round(random.randint(40, 120), 3)
+
+    def set_range_limite(self, valor):
+        return max(0, min(120, valor))
 
     def simular_dado(self, ultima_ocorrencia=None):
-        horas = int(datetime.now().strftime('%H'))
-        if self.is_anomalia and self.sortear_anomalia():
-            return self.set_range_limite(random.uniform(200, 400))
-
+        hora_atual = int(datetime.now().strftime('%H'))
         if ultima_ocorrencia:
-            if random.random() < 0.001:
-                return round(self.validate_horario(horas), 3)
+            if self.sortear_anomalia():
+                return round(self.set_range_limite(random.uniform(200, 400)), 3)
             else:
-                return round(self.set_range_limite(ultima_ocorrencia + random.uniform(-0.1, 0.1)), 3)
+                return round(self.set_range_limite(ultima_ocorrencia + random.uniform(-1, 1)), 3)
         else:
-            return round(self.set_range_limite(self.validate_horario(horas)), 3)
+            return round(self.set_range_limite(self.validate_horario(hora_atual)), 3)

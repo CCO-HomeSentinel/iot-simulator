@@ -13,6 +13,7 @@ def ativar_sensores(instancias):
 
 def simular(sensores, ultima_ocorrencia):
     data_atual = datetime.now().isoformat().split('.')[0]
+    sensor_error = None
 
     try:
         ocorrencias = []
@@ -21,6 +22,7 @@ def simular(sensores, ultima_ocorrencia):
             sensor_data = {}
             sensor_data['timestamp'] = data_atual
             sensor_data['sensor_id'] = sensor.id
+            sensor_error = sensor.id
 
             if ultima_ocorrencia is None:
                 sensor_data['valor'] = sensor_funcao[sensor.tipo].simular_dado()
@@ -31,7 +33,7 @@ def simular(sensores, ultima_ocorrencia):
 
         return ocorrencias
     except Exception as e:
-        print(f'Erro ao inserir dados: {e}')
+        print(f'Erro ao inserir dados do sensor.id {sensor_error}: {e}')
         exit()
 
 def buscar_ultimo_dado(ultimos_dados, sensor_id):

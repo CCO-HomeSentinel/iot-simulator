@@ -39,7 +39,7 @@ def main():
         novos_dados = simular(instancias, ultimos_dados)
         dados['registros'].extend(novos_dados)
         quantidade_rodadas += 1
-                
+
         clear()
         print(f"{len(dados['registros'])} dados simulados\n{quantidade_envios} envios realizados\n{quantidade_rodadas} rodadas\n")
 
@@ -47,7 +47,8 @@ def main():
             enviar_json(dados)
             start = datetime.now()
             quantidade_envios += 1
-            
+            dados = {'registros': []}
+
         sleep(intervalo_geracao)
 
 if __name__ == '__main__':
