@@ -39,7 +39,7 @@ class MySQLConnection:
     def __init__(self):
         self.engine = create_engine(
             f"mysql://{os.getenv('MYSQL_USERNAME')}:{os.getenv('MYSQL_PASSWORD')}@"
-            f"{os.getenv('MYSQL_HOST')}:{os.getenv('MYSQL_PORT')}/{os.getenv('MYSQL_DATABASE')}"
+            f"{os.getenv('MYSQL_HOST')}:{int(os.getenv('MYSQL_PORT'))}/{os.getenv('MYSQL_DATABASE')}"
         )
         Session = sessionmaker(bind=self.engine)
         self.session = Session()

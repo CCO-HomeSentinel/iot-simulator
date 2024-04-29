@@ -40,11 +40,14 @@ def main():
         dados['registros'].extend(novos_dados)
         quantidade_rodadas += 1
                 
-        clear()
+        for sensor in novos_dados:
+            print(f"Sensor: {sensor['sensor_id']} | Valor: {sensor['valor']} | Timestamp: {sensor['timestamp']}\n")
+
+        # clear()
         print(f"{len(dados['registros'])} dados simulados\n{quantidade_envios} envios realizados\n{quantidade_rodadas} rodadas\n")
 
         if (datetime.now() - start).seconds >= intervalo_envio:
-            enviar_json(dados)
+            # enviar_json(dados)
             start = datetime.now()
             quantidade_envios += 1
             dados = {'registros': []}
