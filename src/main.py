@@ -47,6 +47,7 @@ def main():
             enviar_json(dados)
             start = datetime.now()
             quantidade_envios += 1
+            dados = {'registros': []}
             
         sleep(intervalo_geracao)
 
