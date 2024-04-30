@@ -9,9 +9,9 @@ class SensorMovimento(ModeloSensor):
     def sortear_movimento(self, ultima_ocorrencia):
         hora_atual = int(datetime.now().strftime('%H'))
         if 0 <= hora_atual <= 7:
-            return random.random() < 0.005
+            return random.random() < 0.00005
         elif ultima_ocorrencia == True:
-            return random.random() < 0.75
+            return random.random() < 0.2
         else:
             return random.random() < 0.2
 

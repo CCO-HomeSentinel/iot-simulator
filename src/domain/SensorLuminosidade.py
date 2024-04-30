@@ -25,7 +25,7 @@ class SensorLuminosidade(ModeloSensor):
         elif 1170 <= minutos < 1260:
             luminosidade_base = random.randint(20, 40)
         else:  # 22:00 - 3:59
-            luminosidade_base = random.randint(10, 20)
+            luminosidade_base = random.randint(5, 15)
 
         if 125 <= minutos < 155 and random.random() < 0.1:
             luminosidade_base = min(luminosidade_base + 5, 100)
