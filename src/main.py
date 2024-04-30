@@ -15,6 +15,8 @@ def main():
     quantidade_rodadas = 0
     intervalo_geracao = float(os.getenv('INTERVALO_SIMULADOR'))
     intervalo_envio = float(os.getenv('INTERVALO_ENVIO'))
+    temperatura = None
+    ultima_temperatura_start = None
 
     dados = {'registros': []}
 
@@ -36,11 +38,22 @@ def main():
     while True:
         ultimos_dados = dados['registros'][-len(instancias):] if dados['registros'] else None
 
+        if temperatura == None or (datetime.now() - ultima_temperatura_start).seconds >= 600:
+            for sensor in instancias:
+                if sensor.tipo == 'temperatura':
+                    temperatura = sensor.consultar_open_weather()
+                    sensor.temperatura_memoria = temperatura
+                    break
+
+            ultima_temperatura_start = datetime.now()
+
         novos_dados = simular(instancias, ultimos_dados)
         dados['registros'].extend(novos_dados)
         quantidade_rodadas += 1
 
-        clear()
+        # clear()
+        for dado in novos_dados:
+            print(f"{dado['timestamp']} - {dado['sensor_id']} - {dado['valor']}")
         print(f"{len(dados['registros'])} dados simulados\n{quantidade_envios} envios realizados\n{quantidade_rodadas} rodadas\n")
 
         if (datetime.now() - start).seconds >= intervalo_envio:
