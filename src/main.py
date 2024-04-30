@@ -51,9 +51,7 @@ def main():
         dados['registros'].extend(novos_dados)
         quantidade_rodadas += 1
 
-        # clear()
-        for dado in novos_dados:
-            print(f"{dado['timestamp']} - {dado['sensor_id']} - {dado['valor']}")
+        clear()
         print(f"{len(dados['registros'])} dados simulados\n{quantidade_envios} envios realizados\n{quantidade_rodadas} rodadas\n")
 
         if (datetime.now() - start).seconds >= intervalo_envio:
