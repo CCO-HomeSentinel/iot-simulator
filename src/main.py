@@ -17,6 +17,7 @@ def main():
     intervalo_envio = float(os.getenv('INTERVALO_ENVIO'))
     temperatura = None
     ultima_temperatura_start = None
+    intervalo_requisicao_temperatura = int(os.getenv('OPEN_WEATHER_INTERVALO'))
 
     dados = {'registros': []}
 
@@ -38,7 +39,7 @@ def main():
     while True:
         ultimos_dados = dados['registros'][-len(instancias):] if dados['registros'] else None
 
-        if temperatura == None or (datetime.now() - ultima_temperatura_start).seconds >= 600:
+        if temperatura == None or (datetime.now() - ultima_temperatura_start).seconds >= intervalo_requisicao_temperatura:
             for sensor in instancias:
                 if sensor.tipo == 'temperatura':
                     temperatura = sensor.consultar_open_weather()
