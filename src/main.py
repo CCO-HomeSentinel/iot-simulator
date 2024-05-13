@@ -57,11 +57,20 @@ def main():
 
         if (datetime.now() - start).seconds >= intervalo_envio:
             enviar_json(dados)
+
             start = datetime.now()
             quantidade_envios += 1
             dados = {'registros': []}
-
+            
         sleep(intervalo_geracao)
+
+def tentar_enviar_json(dados):
+    is_enviado = enviar_json(dados)
+    if is_enviado:
+        return True
+    else:
+        sleep(5)
+        return tentar_enviar_json(dados)
 
 if __name__ == '__main__':
     main()

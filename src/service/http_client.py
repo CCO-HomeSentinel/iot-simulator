@@ -27,18 +27,22 @@ def enviar_json(json):
         )
 
     if response.status_code != 200:
-        print(response.text) 
+        #TODO - Logar erro
+        return False 
 
-        exit()
     else:
         destruir_arquivo(path)
         return True
     
-def receber_clima():
+def receber_clima(valor_anterior):
     url = f"{OPEN_WEATHER_API_URL}?q={OPEN_WEATHER_CIDADE}&appid={OPEN_WEATHER_API_KEY}&lang=pt_br"
 
-    req = requests.get(url)
-    req_dic = req.json()
-    temperatura = req_dic['main']['temp']
+    try:
+        req = requests.get(url)
+        req_dic = req.json()
+        temperatura = req_dic['main']['temp']
+    except:
+        #TODO - Logar erro
+        return valor_anterior
 
     return round(temperatura, 2)
