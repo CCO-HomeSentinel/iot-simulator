@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Boolean
+from sqlalchemy import Column, Integer, String, Boolean, Double
 from .base import Base
 
 class ModeloSensor(Base):
@@ -15,10 +15,11 @@ class ModeloSensor(Base):
     regular_min = Column(String(16))
     regular_max = Column(String(16))
     is_anomalia = Column(Boolean)
+    total_bateria = Column(Double)
 
     __table_args__ = {'extend_existing': True}
 
-    def __init__(self, id, nome, tipo, fabricante, funcionalidade, tipo_medida, unidade_medida, min_val, max_val, regular_min_val, regular_max_val, is_anomalia):
+    def __init__(self, id, nome, tipo, fabricante, funcionalidade, tipo_medida, unidade_medida, min_val, max_val, regular_min_val, regular_max_val, is_anomalia, total_bateria):
         self.id = id
         self.nome = nome
         self.tipo = tipo
@@ -31,6 +32,7 @@ class ModeloSensor(Base):
         self.regular_min = regular_min_val
         self.regular_max = regular_max_val
         self.is_anomalia = is_anomalia
+        self.total_bateria = total_bateria
 
     def set_range_limite(self, valor):
         if valor < eval(self.tipo_medida)(self.min):
@@ -43,4 +45,4 @@ class ModeloSensor(Base):
             return eval(self.tipo_medida)(valor)
         
     def to_string(self):
-        return f'ID: {self.id},\nNome: {self.nome},\nTipo: {self.tipo},\nFabricante: {self.fabricante},\nFuncionalidade: {self.funcionalidade},\nTipo Medida: {self.tipo_medida},\nUnidade de Medida: {self.unidade_medida},\nMin: {self.min},\nMax: {self.max},\nRegular Min: {self.regular_min},\nRegular Max: {self.regular_max},\nIs Anomalia: {self.is_anomalia}'
+        return f'ID: {self.id},\nNome: {self.nome},\nTipo: {self.tipo},\nFabricante: {self.fabricante},\nFuncionalidade: {self.funcionalidade},\nTipo Medida: {self.tipo_medida},\nUnidade de Medida: {self.unidade_medida},\nMin: {self.min},\nMax: {self.max},\nRegular Min: {self.regular_min},\nRegular Max: {self.regular_max},\nIs Anomalia: {self.is_anomalia}, Total Bateria: {self.total_bateria}'

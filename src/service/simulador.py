@@ -26,8 +26,10 @@ def simular(sensores, ultima_ocorrencia):
 
             if ultima_ocorrencia is None:
                 sensor_data['valor'] = sensor_funcao[sensor.tipo].simular_dado()
+                sensor_data['bateria'] = sensor_funcao[sensor.tipo].simular_bateria()
             else:
                 sensor_data['valor'] = sensor_funcao[sensor.tipo].simular_dado(buscar_ultimo_dado(ultima_ocorrencia, sensor.id))
+                sensor_data['bateria'] = sensor_funcao[sensor.tipo].simular_bateria
 
             ocorrencias.append(sensor_data)
 
@@ -41,7 +43,8 @@ def buscar_ultimo_dado(ultimos_dados, sensor_id):
         if dado['sensor_id'] == sensor_id:
             return dado['valor']
 
-    return None
+    # Trole um erro para que o programa pare de executar
+    
 
 def refinar_sensores(sensores_clientes, sensores_disponiveis):
     sensores_clientes_disponiveis = []
