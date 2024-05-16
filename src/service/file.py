@@ -7,12 +7,16 @@ dois_diretorios_acima = os.path.dirname(os.path.dirname(path_atual))
 
 def transformar_dict_em_json_file(dados):
     filename = f"registros_{datetime.now().strftime('%Y%m%dT%H%M%S')}.json"
-    path = os.path.join(dois_diretorios_acima, 'data', 'json', filename)
+    full_path = os.path.join(dois_diretorios_acima, 'data', 'json', filename)
+    path = os.path.dirname(full_path)
 
-    with open(path, 'w') as file:
+    if not os.path.exists(path):
+        os.makedirs(path)
+
+    with open(full_path, 'w') as file:
         json.dump(dados, file)
 
-    return filename, path
+    return filename, full_path
 
 def destruir_arquivo(path):
     os.remove(path)
