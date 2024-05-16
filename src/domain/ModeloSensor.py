@@ -16,10 +16,11 @@ class ModeloSensor(Base):
     regular_max = Column(String(16))
     is_anomalia = Column(Boolean)
     total_bateria = Column(Double)
+    is_carregando = Column(Boolean)
 
     __table_args__ = {'extend_existing': True}
 
-    def __init__(self, id, nome, tipo, fabricante, funcionalidade, tipo_medida, unidade_medida, min_val, max_val, regular_min_val, regular_max_val, is_anomalia, total_bateria):
+    def __init__(self, id, nome, tipo, fabricante, funcionalidade, tipo_medida, unidade_medida, min_val, max_val, regular_min_val, regular_max_val, is_anomalia, total_bateria, is_carregando):
         self.id = id
         self.nome = nome
         self.tipo = tipo
@@ -33,6 +34,7 @@ class ModeloSensor(Base):
         self.regular_max = regular_max_val
         self.is_anomalia = is_anomalia
         self.total_bateria = total_bateria
+        self.is_carregando = is_carregando
 
     def set_range_limite(self, valor):
         if valor < eval(self.tipo_medida)(self.min):
