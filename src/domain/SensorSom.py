@@ -3,8 +3,10 @@ from datetime import datetime
 from .ModeloSensor import ModeloSensor
 
 class SensorSom(ModeloSensor):
-    def __init__(self, id, nome, nome_bruto, fabricante, funcionalidade, tipo, unidade_medida, min_val, max_val, regular_min_val, regular_max_val, is_anomalia):
-        super().__init__(id, nome, nome_bruto, fabricante, funcionalidade, tipo, unidade_medida, min_val, max_val, regular_min_val, regular_max_val, is_anomalia)
+    def __init__(self, id, nome, nome_bruto, fabricante, funcionalidade, tipo, unidade_medida, min_val, max_val,
+                regular_min_val, regular_max_val, is_anomalia, total_bateria, taxa_bateria, is_carregando):
+        super().__init__(id, nome, nome_bruto, fabricante, funcionalidade, tipo, unidade_medida, min_val, max_val,
+                        regular_min_val, regular_max_val, is_anomalia, total_bateria, taxa_bateria, is_carregando)
 
     def sortear_anomalia(self):
         return random.random() < 0.0001

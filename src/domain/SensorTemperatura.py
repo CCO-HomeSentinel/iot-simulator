@@ -7,10 +7,13 @@ from service.http_client import receber_clima
 
 load_dotenv()
 OPEN_WEATHER_ACTIVE = os.getenv('OPEN_WEATHER_ACTIVE') == 'True'
+TAXA_CARGA = 0.01
 
 class SensorTemperatura(ModeloSensor):
-    def __init__(self, id, nome, nome_bruto, fabricante, funcionalidade, tipo, unidade_medida, min_val, max_val, regular_min_val, regular_max_val, is_anomalia):
-        super().__init__(id, nome, nome_bruto, fabricante, funcionalidade, tipo, unidade_medida, min_val, max_val, regular_min_val, regular_max_val, is_anomalia)
+    def __init__(self, id, nome, nome_bruto, fabricante, funcionalidade, tipo, unidade_medida, min_val, max_val, 
+                 regular_min_val, regular_max_val, is_anomalia, total_bateria, taxa_bateria, is_carregando):
+        super().__init__(id, nome, nome_bruto, fabricante, funcionalidade, tipo, unidade_medida, min_val, max_val, 
+                         regular_min_val, regular_max_val, is_anomalia, total_bateria, taxa_bateria, is_carregando)
         self.temperatura_memoria = None
 
     def simular_dado(self, ultima_ocorrencia=None):

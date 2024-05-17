@@ -83,8 +83,10 @@ class MySQLConnection:
 
         for sensor in sensores_disponivies:
             if sensor[12] in sensor_dict:
-                objetos_instanciados.append(sensor_dict[sensor[12]](sensor[10], sensor[11], sensor[12], sensor[13], sensor[14], sensor[15], sensor[16], sensor[17], sensor[18], sensor[19], sensor[20], sensor[21]))
-
+                objetos_instanciados.append(sensor_dict[sensor[12]](sensor[6], sensor[11], sensor[12], sensor[13], sensor[14], 
+                                                        sensor[15], sensor[16], sensor[17], sensor[18], sensor[19], sensor[20], 
+                                                        sensor[21], sensor[22], sensor[23], False))
+                
         return objetos_instanciados
     
     def get_sensores_para_simular(self):
