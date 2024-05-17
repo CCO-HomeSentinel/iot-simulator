@@ -12,6 +12,10 @@ from thread.thread_functions import tentar_enviar_json_periodicamente
 load_dotenv()
 
 ENABLE_LOGS = os.getenv('ENABLE_LOGS').lower() == 'true'
+INTERVALO_SIMULADOR = float(os.getenv('INTERVALO_SIMULADOR'))
+INTERVALO_ENVIO = float(os.getenv('INTERVALO_ENVIO'))
+OPEN_WEATHER_INTERVALO = int(os.getenv('OPEN_WEATHER_INTERVALO'))
+SKIP_INTRO = load_init(skip=os.getenv('SKIP_INTRO') in ('True', 'true', '1'))
 
 if ENABLE_LOGS:
     logger = Logger()
@@ -20,15 +24,10 @@ def main():
     start = datetime.now()
     quantidade_envios = 0
     quantidade_rodadas = 0
-    intervalo_geracao = float(os.getenv('INTERVALO_SIMULADOR'))
-    intervalo_envio = float(os.getenv('INTERVALO_ENVIO'))
     temperatura = None
     ultima_temperatura_start = None
-    intervalo_requisicao_temperatura = int(os.getenv('OPEN_WEATHER_INTERVALO'))
-    
     dados = {'registros': []}
 
-    load_init(skip=os.getenv('SKIP_INTRO') in ('True', 'true', '1'))
     connMySQL = MySQLConnection()
 
     sensores_banco = connMySQL.get_sensores()
@@ -46,7 +45,7 @@ def main():
     while True:
         ultimos_dados = dados['registros'][-len(instancias):] if dados['registros'] else None
         
-        if temperatura == None or (datetime.now() - ultima_temperatura_start).seconds >= intervalo_requisicao_temperatura:
+        if temperatura == None or (datetime.now() - ultima_temperatura_start).seconds >= OPEN_WEATHER_INTERVALO:
             for sensor in instancias:
                 if sensor.tipo == 'temperatura':
                     temperatura = sensor.consultar_open_weather()
@@ -62,7 +61,7 @@ def main():
         clear()
         print(f"{len(dados['registros'])} dados simulados\n{quantidade_envios} envios realizados\n{quantidade_rodadas} rodadas\n")
 
-        if (datetime.now() - start).seconds >= intervalo_envio:
+        if (datetime.now() - start).seconds >= INTERVALO_ENVIO:
             envio_thread = threading.Thread(target=tentar_enviar_json_periodicamente, args=(dados,))
             envio_thread.start()
 
@@ -70,7 +69,7 @@ def main():
             quantidade_envios += 1
             dados = {'registros': []}
             
-        sleep(intervalo_geracao)
+        sleep(INTERVALO_SIMULADOR)
 
 if __name__ == '__main__':
     main()
