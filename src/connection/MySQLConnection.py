@@ -3,6 +3,7 @@ import sys
 from sqlalchemy import create_engine, text
 from sqlalchemy.orm import sessionmaker
 from dotenv import load_dotenv
+from config.logger_config import Logger
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
@@ -23,7 +24,11 @@ from domain.SensorMovimento import SensorMovimento
 from domain.SensorSom import SensorSom
 from domain.SensorTemperatura import SensorTemperatura
 
+
 load_dotenv()
+
+if os.getenv('ENABLE_LOGS').lower() == 'true':
+    logger = Logger().get_logger()
 
 sensor_dict = {
     'fumaca': SensorFumaca,
@@ -37,15 +42,18 @@ sensor_dict = {
 
 class MySQLConnection:
     def __init__(self):
-        self.engine = create_engine(
-            f"mysql://{os.getenv('MYSQL_USERNAME')}:{os.getenv('MYSQL_PASSWORD')}@"
-            f"{os.getenv('MYSQL_HOST')}:{int(os.getenv('MYSQL_PORT'))}/{os.getenv('MYSQL_DATABASE')}"
-        )
-        Session = sessionmaker(bind=self.engine)
-        self.session = Session()
-        self.Base = Base
+        try:
+            self.engine = create_engine(
+                f"mysql://{os.getenv('MYSQL_USERNAME')}:{os.getenv('MYSQL_PASSWORD')}@"
+                f"{os.getenv('MYSQL_HOST')}:{int(os.getenv('MYSQL_PORT'))}/{os.getenv('MYSQL_DATABASE')}"
+            )
+            Session = sessionmaker(bind=self.engine)
+            self.session = Session()
+            self.Base = Base
 
-        self.Base.metadata.create_all(self.engine)
+            self.Base.metadata.create_all(self.engine)
+        except Exception as e:
+            logger.error(f'Erro ao conectar com o banco de dados. {e}')
 
     def get_session(self):
         return self.session
@@ -97,9 +105,3 @@ class MySQLConnection:
 	            JOIN modelo_sensor ms ON ss.modelo_sensor_id = ms.id;
         """
         return self.execute_select_query(query)
-        
-if __name__ == "__main__":
-    mysql_conn = MySQLConnection()
-    
-    session = mysql_conn.get_session()
-    mysql_conn.close_connection()

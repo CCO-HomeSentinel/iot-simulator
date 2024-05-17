@@ -45,8 +45,8 @@ def simular(sensores, ultima_ocorrencia):
 
         return ocorrencias
     except Exception as e:
-        print(f'Erro ao inserir dados do sensor.id {sensor_error}: {e}')
-        exit()
+        logger.error(f'Erro ao simular dados na iteração do sensor de id: {sensor_error}. {e}')
+
 
 def buscar_ultimo_dado(ultimos_dados, sensor_id):
     for dado in ultimos_dados:
