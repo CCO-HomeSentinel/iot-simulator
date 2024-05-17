@@ -1,8 +1,16 @@
 from datetime import datetime
 from dotenv import load_dotenv
+from .lexer import analisar, logar_tokens
+from time import sleep
+import os
+from config.logger_config import Logger
 
 load_dotenv()
+ENABLE_LOGS = os.getenv('ENABLE_LOGS').lower() == 'true'
 
+if ENABLE_LOGS:
+    logger = Logger().get_logger()
+    
 sensor_funcao = {}
 
 def ativar_sensores(instancias):
@@ -10,6 +18,20 @@ def ativar_sensores(instancias):
         sensor_funcao[instancia.tipo] = instancia
 
     return sensor_funcao
+
+def processar_tokens(tokens):
+    valor = None
+    unidade = None
+    for token in tokens:
+        if token[0] == 'NUMERO':
+            valor = token[1]
+        elif token[0] == 'UNIDADE':
+            unidade = token[1]
+        else:
+            logger.error(f'Token inesperado: {token}')
+            exit()
+            
+    return valor, unidade
 
 def simular(sensores, ultima_ocorrencia):
     data_atual = datetime.now().isoformat().split('.')[0]
@@ -35,6 +57,10 @@ def simular(sensores, ultima_ocorrencia):
                 novos_dados = sensor_funcao[sensor.tipo].simular_bateria(dados_ocorrencia[1])
                 sensor_data['bateria'] = novos_dados[0]
                 sensor_data['is_carregando'] = novos_dados[1]
+                tokens = analisar(str(novos_dados[0]))
+                valor, unidade = processar_tokens(tokens)
+                logar_tokens([valor, unidade])
+                sleep(0.01)
 
             ocorrencias.append(sensor_data)
 
@@ -47,9 +73,6 @@ def buscar_ultimo_dado(ultimos_dados, sensor_id):
     for dado in ultimos_dados:
         if dado['sensor_id'] == sensor_id:
             return dado['valor'], dado['bateria']
-
-    # Trole um erro para que o programa pare de executar
-
 
 def refinar_sensores(sensores_clientes, sensores_disponiveis):
     sensores_clientes_disponiveis = []
