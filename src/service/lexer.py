@@ -29,3 +29,7 @@ def analisar(texto):
             raise RuntimeError(f'Caractere inesperado: {valor}')
         tokens.append((tipo, valor))
     return tokens
+
+def logar_tokens(tokens):
+    for token in tokens:
+        print(token)

@@ -37,6 +37,7 @@ def main():
     sensores = refinar_sensores(sensores_clientes, sensores_disponiveis)
     instancias = connMySQL.load_sensores(sensores)
     ativar_sensores(instancias)
+    connMySQL.close_connection()
 
     if not sensores:
         load_not_found()
