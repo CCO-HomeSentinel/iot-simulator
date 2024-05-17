@@ -68,4 +68,17 @@ class ModeloSensor(Base):
         return round(nova_ocorrencia, 3), self.is_carregando
         
     def to_string(self):
-        return f'ID: {self.id},\nNome: {self.nome},\nTipo: {self.tipo},\nFabricante: {self.fabricante},\nFuncionalidade: {self.funcionalidade},\nTipo Medida: {self.tipo_medida},\nUnidade de Medida: {self.unidade_medida},\nMin: {self.min},\nMax: {self.max},\nRegular Min: {self.regular_min},\nRegular Max: {self.regular_max},\nIs Anomalia: {self.is_anomalia}, Total Bateria: {self.total_bateria}'
+        return f'''ID: {self.id},
+                \nNome: {self.nome},\nTipo: {self.tipo},
+                \nFabricante: {self.fabricante},
+                \nFuncionalidade: {self.funcionalidade},
+                \nTipo de Medida: {self.tipo_medida},
+                \nUnidade de Medida: {self.unidade_medida},
+                \nValor Mínimo: {self.min},
+                \nValor Máximo: {self.max},
+                \nValor Mínimo Regular: {self.regular_min},
+                \nValor Máximo Regular: {self.regular_max},
+                \nAnomalia: {self.is_anomalia},
+                \nTotal de Bateria: {self.total_bateria},
+                \nTaxa de Bateria: {self.taxa_bateria},
+                \nCarregando: {self.is_carregando}'''
