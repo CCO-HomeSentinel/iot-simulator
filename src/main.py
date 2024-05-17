@@ -59,14 +59,8 @@ def main():
         dados['registros'].extend(novos_dados)
         quantidade_rodadas += 1
 
-        # clear()
-        # print(f"{len(dados['registros'])} dados simulados\n{quantidade_envios} envios realizados\n{quantidade_rodadas} rodadas\n")
-        row = 0
-        for dado in novos_dados:
-            row+=1
-            print(row, " - ", dado)
-            
-        exit()
+        clear()
+        print(f"{len(dados['registros'])} dados simulados\n{quantidade_envios} envios realizados\n{quantidade_rodadas} rodadas\n")
 
         if (datetime.now() - start).seconds >= intervalo_envio:
             envio_thread = threading.Thread(target=tentar_enviar_json_periodicamente, args=(dados,))
