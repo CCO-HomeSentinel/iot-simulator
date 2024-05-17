@@ -1,7 +1,5 @@
 from datetime import datetime
 from dotenv import load_dotenv
-from .lexer import analisar, logar_tokens
-from time import sleep
 import os
 from config.logger_config import Logger
 
@@ -18,20 +16,6 @@ def ativar_sensores(instancias):
         sensor_funcao[instancia.tipo] = instancia
 
     return sensor_funcao
-
-def processar_tokens(tokens):
-    valor = None
-    unidade = None
-    for token in tokens:
-        if token[0] == 'NUMERO':
-            valor = token[1]
-        elif token[0] == 'UNIDADE':
-            unidade = token[1]
-        else:
-            logger.error(f'Token inesperado: {token}')
-            exit()
-            
-    return valor, unidade
 
 def simular(sensores, ultima_ocorrencia):
     data_atual = datetime.now().isoformat().split('.')[0]
@@ -57,11 +41,6 @@ def simular(sensores, ultima_ocorrencia):
                 novos_dados = sensor_funcao[sensor.tipo].simular_bateria(dados_ocorrencia[1])
                 sensor_data['bateria'] = novos_dados[0]
                 sensor_data['is_carregando'] = novos_dados[1]
-                tokens = analisar(str(novos_dados[0]))
-                valor, unidade = processar_tokens(tokens)
-                logar_tokens([valor, unidade])
-                sleep(0.01)
-
             ocorrencias.append(sensor_data)
 
         return ocorrencias
