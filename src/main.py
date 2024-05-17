@@ -20,28 +20,35 @@ SKIP_INTRO = load_init(skip=os.getenv('SKIP_INTRO') in ('True', 'true', '1'))
 if ENABLE_LOGS:
     logger = Logger()
 
+def set_up():
+    connMySQL = MySQLConnection()
+    
+    sensores_banco = connMySQL.get_sensores()
+    sensores_disponiveis = load_sensores_disponiveis(sensores_banco)
+    sensores_clientes = connMySQL.get_sensores_para_simular()
+    
+    sensores = refinar_sensores(sensores_clientes, sensores_disponiveis)
+    
+    if not sensores:
+        load_not_found()
+        exit()
+        
+    instancias = connMySQL.load_sensores(sensores)
+    ativar_sensores(instancias)
+    
+    connMySQL.close_connection()
+    
+    return instancias
+
 def main():
+    instancias = set_up()
+    
     start = datetime.now()
     quantidade_envios = 0
     quantidade_rodadas = 0
     temperatura = None
     ultima_temperatura_start = None
     dados = {'registros': []}
-
-    connMySQL = MySQLConnection()
-
-    sensores_banco = connMySQL.get_sensores()
-    sensores_disponiveis = load_sensores_disponiveis(sensores_banco)
-    sensores_clientes = connMySQL.get_sensores_para_simular()
-    
-    sensores = refinar_sensores(sensores_clientes, sensores_disponiveis)
-    instancias = connMySQL.load_sensores(sensores)
-    ativar_sensores(instancias)
-    connMySQL.close_connection()
-
-    if not sensores:
-        load_not_found()
-        exit()
 
     while True:
         ultimos_dados = dados['registros'][-len(instancias):] if dados['registros'] else None
