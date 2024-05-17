@@ -25,7 +25,7 @@ def main():
     temperatura = None
     ultima_temperatura_start = None
     intervalo_requisicao_temperatura = int(os.getenv('OPEN_WEATHER_INTERVALO'))
-
+    
     dados = {'registros': []}
 
     load_init(skip=os.getenv('SKIP_INTRO') in ('True', 'true', '1'))
@@ -34,7 +34,7 @@ def main():
     sensores_banco = connMySQL.get_sensores()
     sensores_disponiveis = load_sensores_disponiveis(sensores_banco)
     sensores_clientes = connMySQL.get_sensores_para_simular()
-
+    
     sensores = refinar_sensores(sensores_clientes, sensores_disponiveis)
     instancias = connMySQL.load_sensores(sensores)
     ativar_sensores(instancias)
@@ -45,7 +45,7 @@ def main():
 
     while True:
         ultimos_dados = dados['registros'][-len(instancias):] if dados['registros'] else None
-
+        
         if temperatura == None or (datetime.now() - ultima_temperatura_start).seconds >= intervalo_requisicao_temperatura:
             for sensor in instancias:
                 if sensor.tipo == 'temperatura':
@@ -59,8 +59,14 @@ def main():
         dados['registros'].extend(novos_dados)
         quantidade_rodadas += 1
 
-        clear()
-        print(f"{len(dados['registros'])} dados simulados\n{quantidade_envios} envios realizados\n{quantidade_rodadas} rodadas\n")
+        # clear()
+        # print(f"{len(dados['registros'])} dados simulados\n{quantidade_envios} envios realizados\n{quantidade_rodadas} rodadas\n")
+        row = 0
+        for dado in novos_dados:
+            row+=1
+            print(row, " - ", dado)
+            
+        exit()
 
         if (datetime.now() - start).seconds >= intervalo_envio:
             envio_thread = threading.Thread(target=tentar_enviar_json_periodicamente, args=(dados,))

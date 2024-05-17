@@ -16,11 +16,11 @@ class ModeloSensor(Base):
     regular_max = Column(String(16))
     is_anomalia = Column(Boolean)
     total_bateria = Column(Double)
-    is_carregando = Column(Boolean)
 
     __table_args__ = {'extend_existing': True}
 
-    def __init__(self, id, nome, tipo, fabricante, funcionalidade, tipo_medida, unidade_medida, min_val, max_val, regular_min_val, regular_max_val, is_anomalia, total_bateria, is_carregando):
+    def __init__(self, id, nome, tipo, fabricante, funcionalidade, tipo_medida, unidade_medida, min_val, max_val, regular_min_val, 
+                    regular_max_val, is_anomalia, total_bateria, taxa_bateria, is_carregando):
         self.id = id
         self.nome = nome
         self.tipo = tipo
@@ -34,6 +34,7 @@ class ModeloSensor(Base):
         self.regular_max = regular_max_val
         self.is_anomalia = is_anomalia
         self.total_bateria = total_bateria
+        self.taxa_bateria = taxa_bateria
         self.is_carregando = is_carregando
 
     def set_range_limite(self, valor):
@@ -45,6 +46,26 @@ class ModeloSensor(Base):
         
         else:
             return eval(self.tipo_medida)(valor)
+        
+    def get_battery_alert(self):
+        return round((self.total_bateria / 100) * 15, 3)
+    
+    def simular_bateria(self, ultima_ocorrencia=None):
+        if ultima_ocorrencia is None:
+            self.is_carregando = False
+            return self.total_bateria, self.is_carregando
+        
+        if ultima_ocorrencia < 15:
+            self.is_carregando = True
+        elif ultima_ocorrencia >= self.total_bateria:
+            self.is_carregando = False
+
+        if self.is_carregando:
+            nova_ocorrencia = min(ultima_ocorrencia + (self.taxa_bateria * 0.0001), self.total_bateria)
+        else:
+            nova_ocorrencia = max(ultima_ocorrencia - (self.taxa_bateria * 0.0001), self.get_battery_alert())
+
+        return round(nova_ocorrencia, 3), self.is_carregando
         
     def to_string(self):
         return f'ID: {self.id},\nNome: {self.nome},\nTipo: {self.tipo},\nFabricante: {self.fabricante},\nFuncionalidade: {self.funcionalidade},\nTipo Medida: {self.tipo_medida},\nUnidade de Medida: {self.unidade_medida},\nMin: {self.min},\nMax: {self.max},\nRegular Min: {self.regular_min},\nRegular Max: {self.regular_max},\nIs Anomalia: {self.is_anomalia}, Total Bateria: {self.total_bateria}'

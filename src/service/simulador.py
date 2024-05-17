@@ -17,7 +17,7 @@ def simular(sensores, ultima_ocorrencia):
 
     try:
         ocorrencias = []
-
+        
         for sensor in sensores:
             sensor_data = {}
             sensor_data['timestamp'] = data_atual
@@ -26,10 +26,15 @@ def simular(sensores, ultima_ocorrencia):
 
             if ultima_ocorrencia is None:
                 sensor_data['valor'] = sensor_funcao[sensor.tipo].simular_dado()
-                sensor_data['bateria'] = sensor_funcao[sensor.tipo].simular_bateria()
+                dados_bateria = sensor_funcao[sensor.tipo].simular_bateria()
+                sensor_data['bateria'] = dados_bateria[0]
+                sensor_data['is_carregando'] = dados_bateria[1]
             else:
-                sensor_data['valor'] = sensor_funcao[sensor.tipo].simular_dado(buscar_ultimo_dado(ultima_ocorrencia, sensor.id))
-                sensor_data['bateria'] = sensor_funcao[sensor.tipo].simular_bateria
+                dados_ocorrencia = buscar_ultimo_dado(ultima_ocorrencia, sensor.id)
+                sensor_data['valor'] = sensor_funcao[sensor.tipo].simular_dado(dados_ocorrencia[0])
+                novos_dados = sensor_funcao[sensor.tipo].simular_bateria(dados_ocorrencia[1])
+                sensor_data['bateria'] = novos_dados[0]
+                sensor_data['is_carregando'] = novos_dados[1]
 
             ocorrencias.append(sensor_data)
 
@@ -41,10 +46,10 @@ def simular(sensores, ultima_ocorrencia):
 def buscar_ultimo_dado(ultimos_dados, sensor_id):
     for dado in ultimos_dados:
         if dado['sensor_id'] == sensor_id:
-            return dado['valor']
+            return dado['valor'], dado['bateria']
 
     # Trole um erro para que o programa pare de executar
-    
+
 
 def refinar_sensores(sensores_clientes, sensores_disponiveis):
     sensores_clientes_disponiveis = []
