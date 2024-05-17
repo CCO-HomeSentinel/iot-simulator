@@ -1,5 +1,6 @@
 from datetime import datetime
 from dotenv import load_dotenv
+import lexer
 
 load_dotenv()
 
@@ -35,6 +36,7 @@ def simular(sensores, ultima_ocorrencia):
                 novos_dados = sensor_funcao[sensor.tipo].simular_bateria(dados_ocorrencia[1])
                 sensor_data['bateria'] = novos_dados[0]
                 sensor_data['is_carregando'] = novos_dados[1]
+                lexer.simular_lexer(sensor_data)
 
             ocorrencias.append(sensor_data)
 
