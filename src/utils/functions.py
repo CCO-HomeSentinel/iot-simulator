@@ -3,26 +3,27 @@ import time
 from dotenv import load_dotenv
 
 thumb = [
-'',
-'  _    _                                   _____                  _     _                  _ ',
-' | |  | |                                 / ____|                | |   (_)                | |',
-' | |__| |   ___    _ __ ___     ___      | (___     ___   _ __   | |_   _   _ __     ___  | |',
-" |  __  |  / _ \  | '_ ` _ \   / _ \      \___ \   / _ \ | '_ \  | __| | | | '_ \   / _ \ | |",
-' | |  | | | (_) | | | | | | | |  __/      ____) | |  __/ | | | | | |_  | | | | | | |  __/ | |',
-' |_|  |_|  \___/  |_| |_| |_|  \___|     |_____/   \___| |_| |_|  \__| |_| |_| |_|  \___| |_|',
-'',                                                                                                              
-'']
+    "",
+    "  _    _                                   _____                  _     _                  _ ",
+    " | |  | |                                 / ____|                | |   (_)                | |",
+    " | |__| |   ___    _ __ ___     ___      | (___     ___   _ __   | |_   _   _ __     ___  | |",
+    " |  __  |  / _ \  | '_ ` _ \   / _ \      \___ \   / _ \ | '_ \  | __| | | | '_ \   / _ \ | |",
+    " | |  | | | (_) | | | | | | | |  __/      ____) | |  __/ | | | | | |_  | | | | | | |  __/ | |",
+    " |_|  |_|  \___/  |_| |_| |_|  \___|     |_____/   \___| |_| |_|  \__| |_| |_| |_|  \___| |_|",
+    "",
+    "",
+]
 
-bolder = '\033[1m'
-not_bolder = '\033[0m'
-
+bolder = "\033[1m"
+not_bolder = "\033[0m"
 
 
 def clear():
-    if os.name == 'nt':
-        os.system('cls')
+    if os.name == "nt":
+        os.system("cls")
     else:
-        os.system('clear')
+        os.system("clear")
+
 
 def load_init(skip=False):
     clear()
@@ -30,17 +31,19 @@ def load_init(skip=False):
     if skip == True:
 
         return
-    
+
     for line in thumb:
         time.sleep(0.3)
         print(line)
 
     time.sleep(1)
 
+
 def load_simulator():
     clear()
-    print('Iniciando simulação...')
+    print("Iniciando simulação...")
     time.sleep(1)
+
 
 def load_menu():
     clear()
@@ -50,15 +53,16 @@ def load_menu():
     print(f"{bolder}3{not_bolder} - Sair\n")
     resposta = input(f"{bolder}> {not_bolder}")
 
-    if resposta == '1':
+    if resposta == "1":
         return 1
-    elif resposta == '2':
+    elif resposta == "2":
         return 2
-    elif resposta == '3':
+    elif resposta == "3":
         load_exit()
     else:
         return 0
-    
+
+
 def load_analise_menu():
     clear()
     print(f"{bolder}HOME SENTINEL - ANÁLISE DE DADOS{not_bolder}\n")
@@ -67,34 +71,37 @@ def load_analise_menu():
     print(f"{bolder}3{not_bolder} - Voltar\n")
     resposta = input(f"{bolder}> {not_bolder}")
 
-    if resposta == '1':
+    if resposta == "1":
         return 1
-    elif resposta == '2':
+    elif resposta == "2":
         return 2
-    elif resposta == '3':
+    elif resposta == "3":
         return 3
     else:
         return 0
+
 
 def load_sensores_disponiveis(lista_banco):
     sensores_disponiveis = []
 
     for sensor in lista_banco:
-        if os.getenv(f"SENSOR_{sensor['tipo'].upper()}") in ('True', 'true', '1'):
-            sensores_disponiveis.append(sensor['tipo'])
+        if os.getenv(f"SENSOR_{sensor['tipo'].upper()}") in ("True", "true", "1"):
+            sensores_disponiveis.append(sensor["tipo"])
 
     return sensores_disponiveis
+
 
 def load_exit():
     clear()
     load_init()
-    print('Até mais...')
+    print("Até mais...")
     time.sleep(1)
     clear()
     exit()
-    
+
+
 def load_not_found():
     clear()
-    print('Nenhum sensor disponível para simulação.')
+    print("Nenhum sensor disponível para simulação.")
     time.sleep(2)
     clear()

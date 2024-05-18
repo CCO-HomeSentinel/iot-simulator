@@ -5,7 +5,7 @@ from sqlalchemy.orm import sessionmaker
 from dotenv import load_dotenv
 from config.logger_config import Logger
 
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 from domain.Cliente import Cliente
 from domain.base import Base
@@ -27,18 +27,19 @@ from domain.SensorTemperatura import SensorTemperatura
 
 load_dotenv()
 
-if os.getenv('ENABLE_LOGS').lower() == 'true':
+if os.getenv("ENABLE_LOGS").lower() == "true":
     logger = Logger().get_logger()
 
 sensor_dict = {
-    'fumaca': SensorFumaca,
-    'gas': SensorGas,
-    'inundacao': SensorInundacao,
-    'luminosidade': SensorLuminosidade,
-    'movimento': SensorMovimento,
-    'som': SensorSom,
-    'temperatura': SensorTemperatura,
+    "fumaca": SensorFumaca,
+    "gas": SensorGas,
+    "inundacao": SensorInundacao,
+    "luminosidade": SensorLuminosidade,
+    "movimento": SensorMovimento,
+    "som": SensorSom,
+    "temperatura": SensorTemperatura,
 }
+
 
 class MySQLConnection:
     def __init__(self):
@@ -53,7 +54,7 @@ class MySQLConnection:
 
             self.Base.metadata.create_all(self.engine)
         except Exception as e:
-            logger.error(f'Erro ao conectar com o banco de dados. {e}')
+            logger.error(f"Erro ao conectar com o banco de dados. {e}")
 
     def get_session(self):
         return self.session
@@ -77,26 +78,44 @@ class MySQLConnection:
             result = connection.execute(text(query))
             results = result.fetchall()
             return results
-    
+
     def get_sensores(self):
         dados = self.session.query(ModeloSensor).all()
         return [self.return_dict(dado) for dado in dados]
-    
+
     def get_sensores_comodos_monitorados(self):
-        dados = self.session.query(Sensor).filter(Sensor.comodo_monitorado_id != None).all()
+        dados = (
+            self.session.query(Sensor).filter(Sensor.comodo_monitorado_id != None).all()
+        )
         return [self.return_dict(dado) for dado in dados]
-    
+
     def load_sensores(self, sensores_disponivies):
         objetos_instanciados = []
 
         for sensor in sensores_disponivies:
             if sensor[12] in sensor_dict:
-                objetos_instanciados.append(sensor_dict[sensor[12]](sensor[6], sensor[11], sensor[12], sensor[13], sensor[14], 
-                                                        sensor[15], sensor[16], sensor[17], sensor[18], sensor[19], sensor[20], 
-                                                        sensor[21], sensor[22], sensor[23], False))
-                
+                objetos_instanciados.append(
+                    sensor_dict[sensor[12]](
+                        sensor[6],
+                        sensor[11],
+                        sensor[12],
+                        sensor[13],
+                        sensor[14],
+                        sensor[15],
+                        sensor[16],
+                        sensor[17],
+                        sensor[18],
+                        sensor[19],
+                        sensor[20],
+                        sensor[21],
+                        sensor[22],
+                        sensor[23],
+                        False,
+                    )
+                )
+
         return objetos_instanciados
-    
+
     def get_sensores_para_simular(self):
         query = """
             SELECT * 

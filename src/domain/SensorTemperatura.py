@@ -6,14 +6,46 @@ import os
 from service.http_client import receber_clima
 
 load_dotenv()
-OPEN_WEATHER_ACTIVE = os.getenv('OPEN_WEATHER_ACTIVE') == 'True'
+OPEN_WEATHER_ACTIVE = os.getenv("OPEN_WEATHER_ACTIVE") == "True"
 TAXA_CARGA = 0.01
 
+
 class SensorTemperatura(ModeloSensor):
-    def __init__(self, id, nome, nome_bruto, fabricante, funcionalidade, tipo, unidade_medida, min_val, max_val, 
-                 regular_min_val, regular_max_val, is_anomalia, total_bateria, taxa_bateria, is_carregando):
-        super().__init__(id, nome, nome_bruto, fabricante, funcionalidade, tipo, unidade_medida, min_val, max_val, 
-                         regular_min_val, regular_max_val, is_anomalia, total_bateria, taxa_bateria, is_carregando)
+    def __init__(
+        self,
+        id,
+        nome,
+        nome_bruto,
+        fabricante,
+        funcionalidade,
+        tipo,
+        unidade_medida,
+        min_val,
+        max_val,
+        regular_min_val,
+        regular_max_val,
+        is_anomalia,
+        total_bateria,
+        taxa_bateria,
+        is_carregando,
+    ):
+        super().__init__(
+            id,
+            nome,
+            nome_bruto,
+            fabricante,
+            funcionalidade,
+            tipo,
+            unidade_medida,
+            min_val,
+            max_val,
+            regular_min_val,
+            regular_max_val,
+            is_anomalia,
+            total_bateria,
+            taxa_bateria,
+            is_carregando,
+        )
         self.temperatura_memoria = None
 
     def simular_dado(self, ultima_ocorrencia=None):
@@ -30,7 +62,7 @@ class SensorTemperatura(ModeloSensor):
         return round(clima - 273.15, 2)
 
     def simular_temperatura_inicial(self):
-        hora_atual = int(datetime.now().strftime('%H'))
+        hora_atual = int(datetime.now().strftime("%H"))
         if 22 <= hora_atual <= 7:
             return round(random.uniform(10, 15), 2)
         elif 7 <= hora_atual < 12:
@@ -41,7 +73,7 @@ class SensorTemperatura(ModeloSensor):
             return round(random.uniform(15, 25), 2)
 
     def atualizar_temperatura(self, temperatura):
-        hora_atual = int(datetime.now().strftime('%H'))
+        hora_atual = int(datetime.now().strftime("%H"))
         if 22 <= hora_atual <= 7:
             return round(max(10, min(15, temperatura)), 2)
         elif 7 <= hora_atual < 12:
