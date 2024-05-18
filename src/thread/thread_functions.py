@@ -5,7 +5,8 @@ import os
 
 load_dotenv()
 
-INTERVALO_TENTATIVA_ENVIO_JSON = int(os.getenv('INTERVALO_TENTATIVA_ENVIO_JSON'))
+INTERVALO_TENTATIVA_ENVIO_JSON = int(os.getenv("INTERVALO_TENTATIVA_ENVIO_JSON"))
+
 
 def tentar_enviar_json_periodicamente(dados):
     success = False

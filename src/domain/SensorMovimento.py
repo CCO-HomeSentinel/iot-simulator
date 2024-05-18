@@ -2,14 +2,46 @@ import random
 from datetime import datetime
 from .ModeloSensor import ModeloSensor
 
+
 class SensorMovimento(ModeloSensor):
-    def __init__(self, id, nome, nome_bruto, fabricante, funcionalidade, tipo, unidade_medida, min_val, max_val,
-                regular_min_val, regular_max_val, is_anomalia, total_bateria, taxa_bateria, is_carregando):
-        super().__init__(id, nome, nome_bruto, fabricante, funcionalidade, tipo, unidade_medida, min_val, max_val,
-                        regular_min_val, regular_max_val, is_anomalia, total_bateria, taxa_bateria, is_carregando)
+    def __init__(
+        self,
+        id,
+        nome,
+        nome_bruto,
+        fabricante,
+        funcionalidade,
+        tipo,
+        unidade_medida,
+        min_val,
+        max_val,
+        regular_min_val,
+        regular_max_val,
+        is_anomalia,
+        total_bateria,
+        taxa_bateria,
+        is_carregando,
+    ):
+        super().__init__(
+            id,
+            nome,
+            nome_bruto,
+            fabricante,
+            funcionalidade,
+            tipo,
+            unidade_medida,
+            min_val,
+            max_val,
+            regular_min_val,
+            regular_max_val,
+            is_anomalia,
+            total_bateria,
+            taxa_bateria,
+            is_carregando,
+        )
 
     def sortear_movimento(self, ultima_ocorrencia):
-        hora_atual = int(datetime.now().strftime('%H'))
+        hora_atual = int(datetime.now().strftime("%H"))
         if 0 <= hora_atual <= 7:
             return random.random() < 0.00005
         elif ultima_ocorrencia == True:

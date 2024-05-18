@@ -2,15 +2,47 @@ import random
 from datetime import datetime
 from .ModeloSensor import ModeloSensor
 
+
 class SensorLuminosidade(ModeloSensor):
-    def __init__(self, id, nome, nome_bruto, fabricante, funcionalidade, tipo, unidade_medida, min_val, max_val,
-                regular_min_val, regular_max_val, is_anomalia, total_bateria, taxa_bateria, is_carregando):
-        super().__init__(id, nome, nome_bruto, fabricante, funcionalidade, tipo, unidade_medida, min_val, max_val,
-                regular_min_val, regular_max_val, is_anomalia, total_bateria, taxa_bateria, is_carregando)
+    def __init__(
+        self,
+        id,
+        nome,
+        nome_bruto,
+        fabricante,
+        funcionalidade,
+        tipo,
+        unidade_medida,
+        min_val,
+        max_val,
+        regular_min_val,
+        regular_max_val,
+        is_anomalia,
+        total_bateria,
+        taxa_bateria,
+        is_carregando,
+    ):
+        super().__init__(
+            id,
+            nome,
+            nome_bruto,
+            fabricante,
+            funcionalidade,
+            tipo,
+            unidade_medida,
+            min_val,
+            max_val,
+            regular_min_val,
+            regular_max_val,
+            is_anomalia,
+            total_bateria,
+            taxa_bateria,
+            is_carregando,
+        )
 
     def sortear_anomalia(self):
         return random.random() < 0.02
-    
+
     def horario_validator(self, minutos):
         if 240 <= minutos < 330:
             luminosidade_base = random.randint(20, 40)
@@ -40,7 +72,9 @@ class SensorLuminosidade(ModeloSensor):
         return max(0, min(100, valor))
 
     def simular_dado(self, ultima_ocorrencia=None):
-        minutos = int(datetime.now().strftime('%H')) * 60 + int(datetime.now().strftime('%M'))
+        minutos = int(datetime.now().strftime("%H")) * 60 + int(
+            datetime.now().strftime("%M")
+        )
 
         if ultima_ocorrencia is None:
             return round(self.horario_validator(minutos), 3)
@@ -48,4 +82,9 @@ class SensorLuminosidade(ModeloSensor):
             if self.sortear_anomalia():
                 return round(self.horario_validator(minutos), 3)
             else:
-                return round(self.set_range_limite(ultima_ocorrencia + random.uniform(-0.5, 0.5)), 3)
+                return round(
+                    self.set_range_limite(
+                        ultima_ocorrencia + random.uniform(-0.5, 0.5)
+                    ),
+                    3,
+                )
