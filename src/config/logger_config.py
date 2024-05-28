@@ -35,5 +35,6 @@ class Logger:
 
         self.logger.addHandler(handler)
 
+
     def get_logger(self):
         return self.logger

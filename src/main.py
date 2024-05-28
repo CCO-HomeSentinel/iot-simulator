@@ -22,7 +22,7 @@ if ENABLE_LOGS:
 
 
 def set_up():
-    connMySQL = MySQLConnection()
+    connMySQL = MySQLConnection(logger)
 
     sensores_banco = connMySQL.get_sensores()
     sensores_disponiveis = load_sensores_disponiveis(sensores_banco)
@@ -64,13 +64,16 @@ def main():
         ):
             for sensor in instancias:
                 if sensor.tipo == "temperatura":
-                    temperatura = sensor.consultar_open_weather()
+                    if temperatura == None:
+                        temperatura = sensor.consultar_open_weather(None, logger)
+                    else:
+                        temperatura = sensor.consultar_open_weather(temperatura, logger)
                     sensor.temperatura_memoria = temperatura
                     break
 
             ultima_temperatura_start = datetime.now()
 
-        novos_dados = simular(instancias, ultimos_dados)
+        novos_dados = simular(instancias, ultimos_dados, logger)
         dados["registros"].extend(novos_dados)
         quantidade_rodadas += 1
 

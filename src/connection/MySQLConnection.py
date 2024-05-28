@@ -3,7 +3,6 @@ import sys
 from sqlalchemy import create_engine, text
 from sqlalchemy.orm import sessionmaker
 from dotenv import load_dotenv
-from config.logger_config import Logger
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
@@ -27,9 +26,6 @@ from domain.SensorTemperatura import SensorTemperatura
 
 load_dotenv()
 
-if os.getenv("ENABLE_LOGS").lower() == "true":
-    logger = Logger().get_logger()
-
 sensor_dict = {
     "fumaca": SensorFumaca,
     "gas": SensorGas,
@@ -42,7 +38,7 @@ sensor_dict = {
 
 
 class MySQLConnection:
-    def __init__(self):
+    def __init__(self, logger=None):
         try:
             self.engine = create_engine(
                 f"mysql://{os.getenv('MYSQL_USERNAME')}:{os.getenv('MYSQL_PASSWORD')}@"
@@ -54,24 +50,31 @@ class MySQLConnection:
 
             self.Base.metadata.create_all(self.engine)
         except Exception as e:
-            logger.error(f"Erro ao conectar com o banco de dados. {e}")
+            if logger:
+                logger.error(f"Erro ao conectar com o banco de dados. {e}")
+
 
     def get_session(self):
         return self.session
 
+
     def close_connection(self):
         self.session.close()
 
+
     def return_dict(self, obj):
         return {col.name: getattr(obj, col.name) for col in obj.__table__.columns}
+
 
     def get_clientes(self):
         dados = self.session.query(Cliente).all()
         return [self.return_dict(dado) for dado in dados]
 
+
     def get_dados_cliente(self, id):
         dados = self.session.query(Cliente).filter(Cliente.id == id).first()
         return self.return_dict(dados)
+
 
     def execute_select_query(self, query):
         with self.engine.connect() as connection:
@@ -79,15 +82,18 @@ class MySQLConnection:
             results = result.fetchall()
             return results
 
+
     def get_sensores(self):
         dados = self.session.query(ModeloSensor).all()
         return [self.return_dict(dado) for dado in dados]
+
 
     def get_sensores_comodos_monitorados(self):
         dados = (
             self.session.query(Sensor).filter(Sensor.comodo_monitorado_id != None).all()
         )
         return [self.return_dict(dado) for dado in dados]
+    
 
     def load_sensores(self, sensores_disponivies):
         objetos_instanciados = []
@@ -115,6 +121,7 @@ class MySQLConnection:
                 )
 
         return objetos_instanciados
+
 
     def get_sensores_para_simular(self):
         query = """
