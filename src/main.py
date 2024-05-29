@@ -1,5 +1,6 @@
 from connection.MySQLConnection import MySQLConnection
 from service.simulador import simular, refinar_sensores, ativar_sensores
+from service.iot_hub import enviar_json
 from utils.functions import load_init, clear, load_sensores_disponiveis, load_not_found
 from time import sleep
 from dotenv import load_dotenv
@@ -78,15 +79,12 @@ def main():
         quantidade_rodadas += 1
 
         clear()
-        print(
-            f"{len(dados['registros'])} dados simulados\n{quantidade_envios} envios realizados\n{quantidade_rodadas} rodadas\n"
-        )
+        print(f"{len(dados['registros'])} dados simulados\n{quantidade_envios} envios realizados\n{quantidade_rodadas} rodadas\n")
 
-        if (datetime.now() - start).seconds >= INTERVALO_ENVIO:
-            envio_thread = threading.Thread(
-                target=tentar_enviar_json_periodicamente, args=(dados,)
-            )
-            envio_thread.start()
+        if (datetime.now() - start).seconds >= intervalo_envio:
+            # envio_thread = threading.Thread(target=tentar_enviar_json_periodicamente, args=(dados,))
+            # envio_thread.start()
+            enviar_json(dados)
 
             start = datetime.now()
             quantidade_envios += 1
