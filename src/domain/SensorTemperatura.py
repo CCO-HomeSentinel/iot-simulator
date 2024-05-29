@@ -57,8 +57,8 @@ class SensorTemperatura(ModeloSensor):
         else:
             return self.simular_temperatura_inicial()
 
-    def consultar_open_weather(self):
-        clima = receber_clima(0)
+    def consultar_open_weather(self, temperatura, logger=None):
+        clima = receber_clima(temperatura, logger)
         return round(clima - 273.15, 2)
 
     def simular_temperatura_inicial(self):

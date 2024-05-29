@@ -1,13 +1,8 @@
 from datetime import datetime
 from dotenv import load_dotenv
 import os
-from config.logger_config import Logger
 
 load_dotenv()
-ENABLE_LOGS = os.getenv("ENABLE_LOGS").lower() == "true"
-
-if ENABLE_LOGS:
-    logger = Logger().get_logger()
 
 sensor_funcao = {}
 
@@ -19,7 +14,7 @@ def ativar_sensores(instancias):
     return sensor_funcao
 
 
-def simular(sensores, ultima_ocorrencia):
+def simular(sensores, ultima_ocorrencia, logger=None):
     data_atual = datetime.now().isoformat().split(".")[0]
     sensor_error = None
 
@@ -51,9 +46,10 @@ def simular(sensores, ultima_ocorrencia):
 
         return ocorrencias
     except Exception as e:
-        logger.error(
-            f"Erro ao simular dados na iteração do sensor de id: {sensor_error}. {e}"
-        )
+        if logger:
+            logger.error(
+                f"Erro ao simular dados na iteração do sensor de id: {sensor_error}. {e}"
+            )
 
 
 def buscar_ultimo_dado(ultimos_dados, sensor_id):
