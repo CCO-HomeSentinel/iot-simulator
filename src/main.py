@@ -6,7 +6,7 @@ from time import sleep
 from dotenv import load_dotenv
 import os
 from datetime import datetime
-from config.logger_config import Logger
+from config.logger import logger
 import threading
 from thread.thread_functions import tentar_enviar_json_periodicamente
 
@@ -18,12 +18,9 @@ INTERVALO_ENVIO = float(os.getenv("INTERVALO_ENVIO"))
 OPEN_WEATHER_INTERVALO = int(os.getenv("OPEN_WEATHER_INTERVALO"))
 SKIP_INTRO = load_init(skip=os.getenv("SKIP_INTRO") in ("True", "true", "1"))
 
-if ENABLE_LOGS:
-    logger = Logger()
-
 
 def set_up():
-    connMySQL = MySQLConnection(logger)
+    connMySQL = MySQLConnection()
 
     sensores_banco = connMySQL.get_sensores()
     sensores_disponiveis = load_sensores_disponiveis(sensores_banco)
@@ -66,22 +63,22 @@ def main():
             for sensor in instancias:
                 if sensor.tipo == "temperatura":
                     if temperatura == None:
-                        temperatura = sensor.consultar_open_weather(None, logger)
+                        temperatura = sensor.consultar_open_weather(None)
                     else:
-                        temperatura = sensor.consultar_open_weather(temperatura, logger)
+                        temperatura = sensor.consultar_open_weather(temperatura)
                     sensor.temperatura_memoria = temperatura
                     break
 
             ultima_temperatura_start = datetime.now()
 
-        novos_dados = simular(instancias, ultimos_dados, logger)
+        novos_dados = simular(instancias, ultimos_dados)
         dados["registros"].extend(novos_dados)
         quantidade_rodadas += 1
 
         clear()
         print(f"{len(dados['registros'])} dados simulados\n{quantidade_envios} envios realizados\n{quantidade_rodadas} rodadas\n")
 
-        if (datetime.now() - start).seconds >= intervalo_envio:
+        if (datetime.now() - start).seconds >= INTERVALO_ENVIO:
             # envio_thread = threading.Thread(target=tentar_enviar_json_periodicamente, args=(dados,))
             # envio_thread.start()
             enviar_json(dados)

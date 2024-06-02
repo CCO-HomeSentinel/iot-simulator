@@ -14,7 +14,6 @@ from domain.Residencia import Residencia
 from domain.Sensor import Sensor
 from domain.ModeloSensor import ModeloSensor
 from domain.Telefone import Telefone
-
 from domain.SensorFumaca import SensorFumaca
 from domain.SensorGas import SensorGas
 from domain.SensorInundacao import SensorInundacao
@@ -22,6 +21,8 @@ from domain.SensorLuminosidade import SensorLuminosidade
 from domain.SensorMovimento import SensorMovimento
 from domain.SensorSom import SensorSom
 from domain.SensorTemperatura import SensorTemperatura
+
+from config.logger import logger
 
 
 load_dotenv()
@@ -38,7 +39,7 @@ sensor_dict = {
 
 
 class MySQLConnection:
-    def __init__(self, logger=None):
+    def __init__(self):
         try:
             self.engine = create_engine(
                 f"mysql://{os.getenv('MYSQL_USERNAME')}:{os.getenv('MYSQL_PASSWORD')}@"
@@ -50,8 +51,7 @@ class MySQLConnection:
 
             self.Base.metadata.create_all(self.engine)
         except Exception as e:
-            if logger:
-                logger.error(f"Erro ao conectar com o banco de dados. {e}")
+            logger.log("error", f"Erro ao conectar com o banco de dados. {e}")
 
 
     def get_session(self):
