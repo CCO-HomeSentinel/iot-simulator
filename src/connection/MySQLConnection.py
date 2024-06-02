@@ -131,3 +131,15 @@ class MySQLConnection:
 	            JOIN modelo_sensor ms ON ss.modelo_sensor_id = ms.id;
         """
         return self.execute_select_query(query)
+    
+    def get_sensor_mapping(self, sensores_id):
+        placeholders = ', '.join(['%s'] * len(sensores_id))
+
+        query = f"""
+            SELECT ms.id
+            FROM home_sentinel.sensor ss 
+	            JOIN home_sentinel.modelo_sensor ms 
+		            ON ss.modelo_sensor_id = ms.id
+                    WHERE ss.id IN ({placeholders});
+        """
+        return self.execute_select_query(query)

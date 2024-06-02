@@ -11,7 +11,6 @@ load_dotenv()
 
 IOT_HUB_CONNECTION_STRING = os.getenv('IOT_HUB_CONNECTION_STRING')
 
-
 def formatter(dados):
     dados.get("registros", [])
 
