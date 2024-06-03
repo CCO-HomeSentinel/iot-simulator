@@ -7,12 +7,12 @@ from dotenv import load_dotenv
 import os
 from datetime import datetime
 from config.logger import logger
+from service.iot_hub import setup
 import threading
 from thread.thread_functions import tentar_enviar_json_periodicamente
 
 load_dotenv()
 
-ENABLE_LOGS = os.getenv("ENABLE_LOGS").lower() == "true"
 INTERVALO_SIMULADOR = float(os.getenv("INTERVALO_SIMULADOR"))
 INTERVALO_ENVIO = float(os.getenv("INTERVALO_ENVIO"))
 OPEN_WEATHER_INTERVALO = int(os.getenv("OPEN_WEATHER_INTERVALO"))
@@ -21,19 +21,33 @@ SKIP_INTRO = load_init(skip=os.getenv("SKIP_INTRO") in ("True", "true", "1"))
 
 def set_up():
     connMySQL = MySQLConnection()
+    logger.log("info", f"Conexão estabelecida com o banco: [{connMySQL.get_database()}]")
 
     sensores_banco = connMySQL.get_sensores()
+    logger.log("info", f"Modelos de sensores carregados com sucesso. [{len(sensores_banco)}] sensores encontrados.")
+
     sensores_disponiveis = load_sensores_disponiveis(sensores_banco)
+    logger.log("info", f"Modelos de sensores disponíveis: {sensores_disponiveis}")
+
     sensores_clientes = connMySQL.get_sensores_para_simular()
+    logger.log("info", f"Quantidade de sensores para simular: [{len(sensores_clientes)}]")
 
     sensores = refinar_sensores(sensores_clientes, sensores_disponiveis)
+    logger.log("info", f"Quantidade de sensores refinados: [{len(sensores)}]")
 
     if not sensores:
+        logger.log("error", "Nenhum sensor encontrado para simulação.")
         load_not_found()
         exit()
 
     instancias = connMySQL.load_sensores(sensores)
     ativar_sensores(instancias)
+
+    ids = [sensor.id for sensor in instancias]
+    mapper = connMySQL.get_sensor_mapping(ids)
+    logger.log("info", f"Mapeamento de sensores carregado com sucesso. [{len(mapper)}] sensores mapeados para o IoT Hub.")
+
+    setup(mapper)
 
     connMySQL.close_connection()
 

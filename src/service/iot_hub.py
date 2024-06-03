@@ -10,9 +10,20 @@ from config.logger import logger
 load_dotenv()
 
 IOT_HUB_CONNECTION_STRING = os.getenv('IOT_HUB_CONNECTION_STRING')
+mapper = {}
+
+
+def setup(mapping):
+    for key, value in mapping:
+        mapper[key] = value
+
 
 def formatter(dados):
-    dados.get("registros", [])
+    dados = dados.get("registros", [])
+
+    for dado in dados:
+        if (dado["sensor_id"] in mapper):
+            dado["modelo_sensor_id"] = mapper[dado["sensor_id"]]
 
     return dados
 
