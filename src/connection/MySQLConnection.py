@@ -27,6 +27,12 @@ from config.logger import logger
 
 load_dotenv()
 
+MYSQL_HOST = os.getenv('MYSQL_HOST')
+MYSQL_PORT = int(os.getenv('MYSQL_PORT'))
+MYSQL_DATABASE = os.getenv('MYSQL_DATABASE')
+MYSQL_USERNAME = os.getenv('MYSQL_USERNAME')
+MYSQL_PASSWORD = os.getenv('MYSQL_PASSWORD')
+
 sensor_dict = {
     "fumaca": SensorFumaca,
     "gas": SensorGas,
@@ -42,8 +48,8 @@ class MySQLConnection:
     def __init__(self):
         try:
             self.engine = create_engine(
-                f"mysql://{os.getenv('MYSQL_USERNAME')}:{os.getenv('MYSQL_PASSWORD')}@"
-                f"{os.getenv('MYSQL_HOST')}:{int(os.getenv('MYSQL_PORT'))}/{os.getenv('MYSQL_DATABASE')}"
+                f"mysql://{MYSQL_USERNAME}:{MYSQL_PASSWORD}@"
+                f"{MYSQL_HOST}:{MYSQL_PORT}/{MYSQL_DATABASE}"
             )
             Session = sessionmaker(bind=self.engine)
             self.session = Session()
@@ -61,6 +67,9 @@ class MySQLConnection:
     def close_connection(self):
         self.session.close()
 
+    def get_database(self):
+        return MYSQL_DATABASE
+
 
     def return_dict(self, obj):
         return {col.name: getattr(obj, col.name) for col in obj.__table__.columns}
@@ -77,10 +86,14 @@ class MySQLConnection:
 
 
     def execute_select_query(self, query):
-        with self.engine.connect() as connection:
-            result = connection.execute(text(query))
-            results = result.fetchall()
-            return results
+        try:
+            with self.engine.connect() as connection:
+                result = connection.execute(text(query))
+                results = result.fetchall()
+                return results
+        except Exception as e:
+            logger.log("error", f"Erro ao executar query de select. {e}")
+            return []
 
 
     def get_sensores(self):
@@ -130,4 +143,19 @@ class MySQLConnection:
 	            JOIN sensor ss ON ss.comodo_monitorado_id = cm.id
 	            JOIN modelo_sensor ms ON ss.modelo_sensor_id = ms.id;
         """
+        return self.execute_select_query(query)
+
+
+    def get_sensor_mapping(self, sensores_id):
+        placeholders = ', '.join(map(str, sensores_id))
+
+        query = f"""
+            SELECT ss.id, ms.id
+            FROM home_sentinel.sensor ss 
+	            JOIN home_sentinel.modelo_sensor ms 
+		            ON ss.modelo_sensor_id = ms.id
+            WHERE ss.id IN ({placeholders})
+            ORDER BY ss.id;
+        """
+
         return self.execute_select_query(query)
