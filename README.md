@@ -34,6 +34,11 @@ To run this project, you will need to add the following environment variables to
 `API_GATEWAY_S3_BUCKET`
 
 
+`USE_IOT_HUB`
+
+`IOT_HUB_CONNECTION_STRING`
+
+
 `OPEN_WEATHER_ACTIVE`
 
 `OPEN_WEATHER_API_URL`
@@ -50,6 +55,7 @@ To run this project, you will need to add the following environment variables to
 `MENU_SIMULADOR`
 
 `MENU_ANALISE`
+
 
 `INTERVALO_SIMULADOR`
 
@@ -69,6 +75,14 @@ To run this project, you will need to add the following environment variables to
 `SENSOR_SOM`
 
 `SENSOR_TEMPERATURA`
+
+
+`INTERVALO_BACKUP_LOGGER`
+
+`INTERVALO_TENTATIVA_ENVIO_JSON`
+
+`ENABLE_LOGS`
+
 
 
 ## Authors
