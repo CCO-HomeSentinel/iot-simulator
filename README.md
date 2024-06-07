@@ -1,52 +1,94 @@
 
 # IoT Sensor Data Application
+![Slide4](https://github.com/CCO-HomeSentinel/iot-simulator/assets/70069239/9ae598a2-36b0-4673-bae2-eff4340c211d)
 
-This project was created with Python and connected to a MongoDB NoSQL database to generate simulated data from IoT sensors.
+## Installation
 
-## Overview
+```bash
+  pip install -r requirements.txt
+```
+```bash
+  mysql -h <host> -P <port> -u <user> -p < data/migrations/20240517_130400__script.sql  
+```
 
-This project is an academic work developed in the IoT Systems course at São Paulo Tech School. The main objective was to create an application using Python as the core language, connected to a NoSQL database (MongoDB), for logging occurrences of simulated data. Additionally, PostgreSQL was utilized to create the business logic for the project.
+
+## Environment Variables
+
+To run this project, you will need to add the following environment variables to your .env file.
+
+`MYSQL_HOST`
+
+`MYSQL_PORT`
+
+`MYSQL_DATABASE`
+
+`MYSQL_USERNAME`
+
+`MYSQL_PASSWORD`
+
+
+`API_GATEWAY_HOST`
+
+`API_GATEWAY_STAGE`
+
+`API_GATEWAY_S3_BUCKET`
+
+
+`OPEN_WEATHER_ACTIVE`
+
+`OPEN_WEATHER_API_URL`
+
+`OPEN_WEATHER_API_KEY`
+
+`OPEN_WEATHER_CIDADE`
+
+`OPEN_WEATHER_INTERVALO`
+
+
+`SKIP_INTRO`
+
+`MENU_SIMULADOR`
+
+`MENU_ANALISE`
+
+`INTERVALO_SIMULADOR`
+
+`INTERVALO_ENVIO`
+
+
+`SENSOR_FUMACA`
+
+`SENSOR_GAS`
+
+`SENSOR_INUNDACAO`
+
+`SENSOR_LUMINOSIDADE`
+
+`SENSOR_MOVIMENTO`
+
+`SENSOR_SOM`
+
+`SENSOR_TEMPERATURA`
+
+
+## Authors
+
+- [@IgorRegali](https://www.github.com/IgorRegali)
+- [@KauanCavazani](https://www.github.com/KauanCavazani)
+- [@kelvinsync](https://www.github.com/kelvinsync)
+- [@leovasc5](https://www.github.com/leovasc5)
+- [@ViniScardoso](https://www.github.com/ViniScardoso)
 
 
 
-## Project Description
+Adicione etiquetas de algum lugar, como: [shields.io](https://shields.io/)
 
-The application aims to demonstrate the integration of Python with MongoDB for handling IoT sensor data. It provides functionalities to generate simulated data from various sensors and store it in the MongoDB database. Furthermore, PostgreSQL is used to define the business rules and process the stored data for analysis.
+[![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
 
-## Features
+[![MIT License](https://img.shields.io/badge/language-python-blue.svg)](https://choosealicense.com/licenses/mit/)
 
--   Python-based application for IoT sensor data simulation.
--   MongoDB integration for storing sensor data.
--   PostgreSQL integration for defining project business logic.
--   Simulated data generation for various types of sensors.
--   Data processing and analysis capabilities.
+[![MIT License](https://img.shields.io/badge/database-mysql-yellow.svg)](https://choosealicense.com/licenses/mit/)
 
-## Getting Started
+[![MIT License](https://img.shields.io/badge/cloud-aws-black.svg)](https://choosealicense.com/licenses/mit/)
 
-To get started with the application, follow these steps:
-
-1.  Clone the repository:
-        
-    `git clone https://github.com/leovasc5/iot-simulator.git` 
-    
-2.  Install the required dependencies:
-       
-    `pip install -r requirements.txt` 
-    
-3.  Set up the MongoDB and PostgreSQL databases:
-    
-    -   Create a MongoDB database named `home_sentinel`.
-    -   Create a PostgreSQL database named `home_sentinel`.
-    -  Under development...
-4.  Run the application:
-    
-    `python ./src/main.py` 
-
-## Contributors
-
--   Under development
--   Under development
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
+[![MIT License](https://img.shields.io/badge/cloud-azure-black.svg)](https://choosealicense.com/licenses/mit/)
