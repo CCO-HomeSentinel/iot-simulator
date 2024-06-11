@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, Double, ForeignKey
+from sqlalchemy import Column, Integer, Float, ForeignKey
 from .base import Base
 
 
@@ -12,4 +12,4 @@ class Sensor(Base):
     comodo_monitorado_residencia_id = Column(
         Integer, ForeignKey("comodo_monitorado.residencia_id"), nullable=False
     )
-    quantidade_bateria = Column(Double, nullable=False)
+    quantidade_bateria = Column(Float, nullable=False)

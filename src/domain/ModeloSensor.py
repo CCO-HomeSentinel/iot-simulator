@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Boolean, Double
+from sqlalchemy import Column, Integer, String, Boolean, Float
 from .base import Base
 
 
@@ -16,7 +16,7 @@ class ModeloSensor(Base):
     regular_min = Column(String(16))
     regular_max = Column(String(16))
     is_anomalia = Column(Boolean)
-    total_bateria = Column(Double)
+    total_bateria = Column(Float)
 
     __table_args__ = {"extend_existing": True}
 
