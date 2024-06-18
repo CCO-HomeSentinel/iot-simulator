@@ -8,15 +8,21 @@ import os
 from datetime import datetime
 from config.logger import logger
 from service.iot_hub import setup
+import importlib
 import threading
 from thread.thread_functions import tentar_enviar_json_periodicamente
 
 load_dotenv()
 
 INTERVALO_SIMULADOR = float(os.getenv("INTERVALO_SIMULADOR"))
+USE_IOT_HUB = os.getenv('USE_IOT_HUB', 'false').lower() == 'true'
 INTERVALO_ENVIO = float(os.getenv("INTERVALO_ENVIO"))
 OPEN_WEATHER_INTERVALO = int(os.getenv("OPEN_WEATHER_INTERVALO"))
 SKIP_INTRO = load_init(skip=os.getenv("SKIP_INTRO") in ("True", "true", "1"))
+if USE_IOT_HUB:
+    module = importlib.import_module('service.iot_hub')
+else:
+    module = importlib.import_module('service.http_client')
 
 
 def set_up():
@@ -93,9 +99,10 @@ def main():
         print(f"{len(dados['registros'])} dados simulados\n{quantidade_envios} envios realizados\n{quantidade_rodadas} rodadas\n")
 
         if (datetime.now() - start).seconds >= INTERVALO_ENVIO:
-            # envio_thread = threading.Thread(target=tentar_enviar_json_periodicamente, args=(dados,))
-            # envio_thread.start()
-            enviar_json(dados)
+            try:
+                module.enviar_json(dados)
+            except Exception as ex:
+                logger.log("error", f"Ocorreu um erro ao enviar os dados para o API Gateway: {ex}")
 
             start = datetime.now()
             quantidade_envios += 1
